@@ -1,0 +1,112 @@
+// This is your Prisma schema file,
+// learn more about it in the docs: https://pris.ly/d/prisma-schema
+
+generator client {
+  provider = "prisma-client-js"
+}
+
+datasource db {
+  provider = "postgresql"
+  url      = env("DATABASE_URL")
+}
+
+// User model
+model User {
+  id        String   @id @default(cuid())
+  email     String   @unique
+  username  String   @unique
+  password  String
+  name      String?
+  bio       String?
+  avatar    String?
+  role      String   @default("user") // user, moderator, admin
+  createdAt DateTime @default(now())
+  updatedAt DateTime @updatedAt
+
+  // Relations
+  tools       Tool[]
+  reviews     Review[]
+  collections ToolCollection[]
+
+  @@index([email])
+  @@index([username])
+}
+
+// Tool model
+model Tool {
+  id          String   @id @default(cuid())
+  title       String
+  description String
+  category    String
+  url         String?
+  githubUrl   String?
+  imageUrl    String?
+  rating      Float    @default(0)
+  downloads   Int      @default(0)
+  status      String   @default("pending") // draft, pending, approved, rejected
+  createdAt   DateTime @default(now())
+  updatedAt   DateTime @updatedAt
+
+  // Foreign keys
+  authorId    String
+  author      User     @relation(fields: [authorId], references: [id], onDelete: Cascade)
+
+  // Relations
+  reviews     Review[]
+  collections ToolCollection[]
+
+  @@index([authorId])
+  @@index([category])
+  @@index([status])
+  @@fulltext([title, description]) // For full-text search
+}
+
+// Review model
+model Review {
+  id        String   @id @default(cuid())
+  rating    Int      // 1-5
+  comment   String?
+  createdAt DateTime @default(now())
+  updatedAt DateTime @updatedAt
+
+  // Foreign keys
+  toolId    String
+  tool      Tool     @relation(fields: [toolId], references: [id], onDelete: Cascade)
+
+  userId    String
+  user      User     @relation(fields: [userId], references: [id], onDelete: Cascade)
+
+  // Constraints
+  @@unique([toolId, userId]) // One review per user per tool
+  @@index([toolId])
+  @@index([userId])
+}
+
+// Collection model (curated tool lists)
+model ToolCollection {
+  id          String   @id @default(cuid())
+  name        String
+  description String?
+  createdAt   DateTime @default(now())
+  updatedAt   DateTime @updatedAt
+
+  // Foreign keys
+  userId      String
+  user        User     @relation(fields: [userId], references: [id], onDelete: Cascade)
+
+  // Relations
+  tools       Tool[]
+
+  @@index([userId])
+}
+
+// Category model
+model Category {
+  id        String   @id @default(cuid())
+  name      String   @unique
+  slug      String   @unique
+  icon      String?
+  color     String?
+  createdAt DateTime @default(now())
+  updatedAt DateTime @updatedAt
+}
