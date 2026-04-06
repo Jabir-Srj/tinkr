@@ -18,3 +18,33 @@ out/
 *~
 .cache/
 .turbo/
+
+.vercel
+.playwright/
+test-results/
+playwright-report/
+
+# Build artifacts
+build_output.txt
+build-check.log
+build.log
+
+# Documentation artifacts (temporary)
+AGENTS.md
+CLAUDE.md
+PROJECT_COMPLETE.md
+TOOLS_IMPLEMENTATION.md
+PDF_IMAGE_TOOLS_SUMMARY.md
+TOOLS_CREATION_SUMMARY.md
+
+# IDE
+.vscode/settings.json
+.idea/
+*.sublime-project
+*.sublime-workspace
+
+# OS
+.DS_Store
+.AppleDouble
+.LSOverride
+Thumbs.db

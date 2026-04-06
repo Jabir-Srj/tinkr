@@ -1,253 +1,350 @@
-# tools.rmv.fyi
+# Tinkr - Web Tools Collection 🛠️
 
-Professional tooling platform for developers and makers. Browse, discover, and share the best tools in the ecosystem.
+A curated collection of small, useful web tools that work entirely in your browser.
+
+**Philosophy:** No logins. No registration. No data collection. Just tools that work.
+
+## ✨ Features
+
+- ✅ **No backend needed** - Everything runs in your browser
+- ✅ **Privacy first** - Zero data collection, no tracking
+- ✅ **Works offline** - After initial load, no internet needed
+- ✅ **Fast & responsive** - Instant results
+- ✅ **Mobile friendly** - Works on all devices
+- ✅ **Beautiful UI** - Clean, minimal design with Tailwind CSS
+
+## 🛠️ Tools (94+ - All Functional)
+
+### Calculators (18 tools)
+- Age Calculator, BMI Calculator, Loan Calculator, Mortgage Calculator
+- ROI Calculator, GPA Calculator, Tip & Split Calculator, Discount Calculator
+- Currency Converter, Universal Converter, Percentage Calculator, Tip Calculator
+- Statistics, Scientific Calculator, Base Converter, Unit Converter
+- Unit Converter Advanced, Matrix Calculator
+
+### Data & Analysis (5 tools)
+- CSV to JSON, JSON to CSV, XML to JSON, YAML Parser, Data Formatter
+
+### Security & Encryption (4 tools)
+- ROT13 Encoder, Caesar Cipher, Base32 Encoder, Hex Encoder
+
+### Colors (7 tools)
+- Color Converter Pro, Contrast Checker, Blindness Simulator
+- Gradient Generator, Palette Generator, Color Name Finder
+
+### Text & Analysis (14 tools)
+- Slug Generator, String Reverser, Palindrome Checker, Text Statistics
+- Lipsum Generator, Lorem Picker, Markdown Preview, Text Scratchpad
+- ASCII Code Lookup, Binary Translator, Case Converter
+- Diff Checker, Word Frequency Analyzer, Readability Score
+
+### Validators (5 tools)
+- Email Validator, URL Validator, JSON Validator, UUID Validator, IP Validator
+
+### Web & Development (9 tools)
+- URL Parser, HTTP Status Codes, Regex Tester Advanced
+- API Response Formatter, DNS Lookup Simulator
+- Regex Tester, Regex Patterns Library
+- CSS Minifier, HTML Minifier
+
+### Images & Design (8 tools)
+- QR Code Generator, Barcode Generator, Avatar Generator
+- Placeholder Generator, SVG to PNG, SVG Editor
+- Image Metadata Viewer, Font Preview
+
+### Generators (7 tools)
+- Meta Tags Generator, Invoice Generator, vCard Generator
+- Base64 Encoder, URL Encoder, Hash Generator
+- Checksum Generator
+
+### Reference & Utilities (10 tools)
+- Timezone Converter, Unit Converter, File Size Converter
+- Prime Checker, Fibonacci Generator
+- Password Checker, Tailwind Cheat Sheet
+- Morse Code Translator, Data URI Generator
+- And more...
+
+---
 
 ## 🚀 Quick Start
 
 ### Prerequisites
 - Node.js 18+
-- PostgreSQL 14+ (or Docker)
 - npm or yarn
 
 ### Setup
 
-1. **Clone the repository**
+1. **Clone repository**
 ```bash
-git clone https://github.com/Jabir-Srj/tools-rmv-fyi.git
-cd tools-rmv-fyi
+cd C:\Users\Jabir\Documents\GitHub\tinkr
 ```
 
-2. **Start PostgreSQL** (using Docker)
+2. **Install dependencies**
 ```bash
-docker-compose up -d
-```
-
-3. **Setup Backend**
-```bash
-cd backend
 npm install
-cp .env.example .env
-npm run prisma:migrate
+```
+
+3. **Start development server**
+```bash
 npm run dev
 ```
 
-Backend runs on: `http://localhost:3001`
-
-4. **Setup Frontend** (new terminal)
-```bash
-cd frontend
-npm install
-npm run dev
+4. **Open in browser**
 ```
-
-Frontend runs on: `http://localhost:3000`
-
-5. **Prisma Studio** (optional, to view database)
-```bash
-cd backend
-npm run prisma:studio
+http://localhost:3000
 ```
-
-Opens at: `http://localhost:5555`
 
 ---
 
 ## 📁 Project Structure
 
 ```
-tools-rmv-fyi/
-├── frontend/              # Next.js 16 + TypeScript + Tailwind
+tinkr/
+├── frontend/                    # Next.js 16 app
 │   ├── app/
+│   │   ├── page.tsx            # Landing page
+│   │   ├── layout.tsx          # Main layout
+│   │   ├── globals.css         # Global styles
+│   │   └── tools/
+│   │       ├── page.tsx        # Tools directory
+│   │       └── [category]/[toolId]/
+│   │           └── page.tsx    # Individual tool pages
 │   ├── components/
-│   ├── public/
-│   └── package.json
-├── backend/               # Express.js + TypeScript
-│   ├── src/
-│   │   ├── index.ts
-│   │   ├── routes/
-│   │   ├── controllers/
-│   │   ├── models/
-│   │   └── middleware/
-│   ├── prisma/
-│   │   └── schema.prisma
-│   └── package.json
-├── database/              # SQL migrations
-├── docker-compose.yml
+│   │   ├── ToolTemplate.tsx    # Tool template component
+│   │   ├── ToolSidebar.tsx     # Navigation sidebar
+│   │   ├── ToolCard.tsx        # Tool card component
+│   │   └── LegacyToolWrapper.tsx # Legacy tool support
+│   ├── lib/
+│   │   ├── tools.ts            # Tool definitions & metadata
+│   │   ├── math.ts             # Math utilities
+│   │   ├── text.ts             # Text utilities
+│   │   └── color.ts            # Color utilities
+│   └── public/
+│       └── fonts/              # Custom fonts
 └── README.md
 ```
 
 ---
 
-## 🛠️ Tech Stack
+## 🎯 Development Commands
 
-### Frontend
-- **Next.js 16** - React framework
-- **TypeScript** - Type safety
-- **Tailwind CSS** - Styling
-- **React Query** - Data fetching
-- **Zustand** - State management
+```bash
+# Start dev server
+npm run dev
 
-### Backend
-- **Express.js** - API server
-- **Prisma** - ORM
-- **PostgreSQL** - Database
-- **JWT** - Authentication
-- **Joi** - Validation
+# Build for production
+npm run build
 
-### DevOps
-- **Docker** - Containerization
-- **Vercel** - Frontend deployment
-- **Railway** - Backend deployment
+# Start production server
+npm run start
 
----
-
-## 📋 Features (Roadmap)
-
-### Phase 1: MVP (Week 1-2)
-- [x] Project setup
-- [ ] Landing page
-- [ ] Tool directory
-- [ ] Authentication (signup/login)
-- [ ] Basic CRUD operations
-
-### Phase 2: Core Features (Week 3-4)
-- [ ] User profiles
-- [ ] Tool collections (curated lists)
-- [ ] Reviews & ratings
-- [ ] Search & filters
-- [ ] Admin moderation
-
-### Phase 3: Growth (Week 5+)
-- [ ] Analytics dashboard
-- [ ] Email notifications
-- [ ] API for third parties
-- [ ] Monetization (featured listings)
-- [ ] Mobile app
-
----
-
-## 🔌 API Endpoints
-
-### Tools
-```
-GET    /api/tools              # List all tools
-GET    /api/tools/:id          # Get tool details
-POST   /api/tools              # Create tool (auth required)
-PUT    /api/tools/:id          # Update tool (auth required)
-DELETE /api/tools/:id          # Delete tool (auth required)
-GET    /api/tools/search?q=    # Search tools
-```
-
-### Users
-```
-POST   /api/auth/signup        # Register
-POST   /api/auth/login         # Login
-POST   /api/auth/logout        # Logout
-GET    /api/users/:id          # Get profile
-PUT    /api/users/:id          # Update profile
-```
-
-### Reviews
-```
-GET    /api/tools/:id/reviews  # Get reviews
-POST   /api/tools/:id/reviews  # Add review (auth required)
-DELETE /api/reviews/:id        # Delete review (auth required)
+# Lint code
+npm run lint
 ```
 
 ---
 
-## 🚢 Deployment
+## 🚢 Deployment (Vercel)
 
-### Frontend (Vercel)
+One-command deployment to Vercel:
+
 ```bash
 cd frontend
-vercel deploy
+npx vercel deploy
 ```
 
-### Backend (Railway)
-1. Connect GitHub repo to Railway
-2. Set environment variables
-3. Deploy automatically on push
+Or connect GitHub repo to Vercel for automatic deployments on push.
 
-### Database (Supabase/Railway)
-- PostgreSQL managed hosting
-- Automatic backups
-- Free tier available
+**Live Demo:** https://frontend-jabirsrjs-projects.vercel.app
 
 ---
 
-## 📚 Development Commands
+## 🛠️ How to Add a New Tool
 
-### Backend
-```bash
-npm run dev              # Start dev server
-npm run build            # Build for production
-npm run start            # Start production server
-npm run prisma:migrate   # Run migrations
-npm run prisma:studio    # Open Prisma Studio
+### 1. Create tool metadata in `lib/tools.ts`
+```typescript
+export const tools = [
+  {
+    name: 'My New Tool',
+    emoji: '🔧',
+    category: 'category-name',
+    url: '/tools/category/my-new-tool',
+    description: 'What this tool does'
+  },
+  // ...
+];
 ```
 
-### Frontend
-```bash
-npm run dev              # Start dev server
-npm run build            # Build for production
-npm run start            # Start production server
-npm run lint             # Lint code
+### 2. Create tool page at `app/tools/category/my-new-tool/page.tsx`
+```typescript
+'use client';
+
+import { useState } from 'react';
+import { ToolTemplate, ToolCard, InputGroup, OutputGroup } from '@/components/ToolTemplate';
+import { Copy } from 'lucide-react';
+
+export default function MyNewTool() {
+  const [input, setInput] = useState('');
+  const [output, setOutput] = useState('');
+
+  const handleProcess = () => {
+    // Your logic here
+    setOutput(result);
+  };
+
+  return (
+    <ToolTemplate
+      title="My New Tool"
+      description="Tool description"
+      icon="🔧"
+      onReset={() => {
+        setInput('');
+        setOutput('');
+      }}
+    >
+      <ToolCard>
+        <InputGroup label="Input">
+          <input
+            type="text"
+            value={input}
+            onChange={(e) => setInput(e.target.value)}
+            placeholder="Enter input..."
+            className="w-full px-4 py-2 border rounded"
+          />
+        </InputGroup>
+
+        <button
+          onClick={handleProcess}
+          className="bg-blue-600 text-white px-4 py-2 rounded hover:bg-blue-700"
+        >
+          Process
+        </button>
+
+        <OutputGroup label="Output">
+          <div className="relative">
+            <input
+              type="text"
+              value={output}
+              readOnly
+              className="w-full px-4 py-2 border rounded bg-gray-50"
+            />
+            {output && (
+              <Copy
+                size={20}
+                className="absolute right-3 top-2 cursor-pointer text-gray-600"
+                onClick={() => navigator.clipboard.writeText(output)}
+              />
+            )}
+          </div>
+        </OutputGroup>
+      </ToolCard>
+    </ToolTemplate>
+  );
+}
 ```
+
+### 3. That's it! Tool is now available at `/tools/category/my-new-tool`
 
 ---
 
-## 🔐 Environment Variables
+## 🎨 Design System
 
-### Backend (.env)
-```
-NODE_ENV=development
-PORT=3001
-DATABASE_URL=postgresql://postgres:postgres@localhost:5432/tools_rmv_dev
-JWT_SECRET=your-secret-key-here
-API_URL=http://localhost:3001
-FRONTEND_URL=http://localhost:3000
-```
+- **Framework:** Next.js 16+ with App Router & Turbopack
+- **Styling:** Tailwind CSS with dark mode
+- **Icons:** Lucide React + Emoji
+- **Components:** Reusable, accessible components
+- **Responsive:** Mobile-first design with proper breakpoints
 
-### Frontend (.env.local)
-```
-NEXT_PUBLIC_API_URL=http://localhost:3001/api
-NEXT_PUBLIC_APP_URL=http://localhost:3000
-```
+### Theme
+- **Light Mode:** Clean, minimal aesthetic
+- **Dark Mode:** Full support with theme toggle
+- **Accessibility:** WCAG compliant color contrast
+- **Performance:** Optimized for fast load times
+
+---
+
+## 📝 Tool Categories
+
+### Data Processing
+- Converters (CSV, JSON, XML, YAML)
+- Formatters (JSON, API responses)
+- Parsers (URL, DNS, Metadata)
+
+### Security & Crypto
+- Encoders (Base64, Base32, Hex, URL)
+- Hash Generators (MD5, SHA256)
+- Ciphers (ROT13, Caesar)
+
+### Utilities
+- Text tools (slugs, reversal, word count)
+- Calculators (age, BMI, loan, mortgage, etc.)
+- Generators (UUID, QR codes, barcodes, etc.)
+
+### Development
+- Code minifiers (CSS, HTML)
+- Regex tester & patterns
+- HTTP status codes reference
+- Tailwind CSS cheat sheet
+
+### Design
+- Color tools (converter, contrast, blindness simulator)
+- Image tools (metadata, QR codes, avatars)
+- Font previewer
+
+---
+
+## 🔒 Privacy Guarantee
+
+- ✅ No cookies (except functional)
+- ✅ No analytics
+- ✅ No tracking pixels
+- ✅ No third-party scripts
+- ✅ All processing happens locally
+- ✅ Open source design principles
 
 ---
 
 ## 🤝 Contributing
 
-1. Create a feature branch: `git checkout -b feature/your-feature`
-2. Commit changes: `git commit -m 'Add feature'`
-3. Push to branch: `git push origin feature/your-feature`
-4. Open a Pull Request
+This is a personal project by Jabir, but improvements and new tools are welcome!
+
+1. Fork the repository
+2. Create a feature branch
+3. Add your tool
+4. Test thoroughly
+5. Submit a pull request
 
 ---
 
-## 📝 License
+## 📜 License
 
-MIT License - see LICENSE file for details
+MIT License - Use freely for any purpose
 
 ---
 
 ## 👨‍💻 Author
 
-Built with ❤️ by **Jabir**
+**Jabir** - Building tools that respect your privacy
 
 - GitHub: [@Jabir-Srj](https://github.com/Jabir-Srj)
-- Email: jabir@rmv.fyi
+- Email: jabirsrj8@gmail.com
 - Location: Kuala Lumpur, Malaysia
+- Undergrad: Computer Science @ Taylor's University
 
 ---
 
 ## 🙏 Acknowledgments
 
-- Inspired by Minipedia
-- Built with modern web technologies
-- Community-driven development
+Inspired by the spirit of the "handmade web" - making simple, useful tools without unnecessary complexity or bloat.
+
+Built with:
+- Next.js 16 (Turbopack)
+- Tailwind CSS
+- React 19
+- Vercel hosting
 
 ---
 
-**Let's build something awesome! 🚀**
+**Made with ❤️ and respect for your privacy** 🚀
+
+Latest update: 94 tools, 16 categories, fully responsive with dark mode support.
