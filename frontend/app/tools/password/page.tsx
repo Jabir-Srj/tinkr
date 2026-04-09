@@ -26,7 +26,13 @@ export default function PasswordGeneratorPage() {
     setPassword(result);
   };
 
-  const checkStrength = (pwd: string) => {
+  type StrengthColor = 'red' | 'yellow' | 'green';
+  type StrengthResult = {
+    level: 'Weak' | 'Fair' | 'Strong';
+    color: StrengthColor;
+  };
+
+  const checkStrength = (pwd: string): StrengthResult => {
     let strength = 0;
     if (pwd.length >= 8) strength++;
     if (pwd.length >= 12) strength++;
@@ -41,7 +47,11 @@ export default function PasswordGeneratorPage() {
   };
 
   const strength = password ? checkStrength(password) : null;
-  const strengthStyles = {
+  const strengthStyles: Record<StrengthColor, {
+    text: string;
+    badgeBg: string;
+    badgeBorder: string;
+  }> = {
     red: {
       text: 'text-red-600 dark:text-red-400',
       badgeBg: 'bg-red-100 dark:bg-red-900/30',
@@ -57,7 +67,7 @@ export default function PasswordGeneratorPage() {
       badgeBg: 'bg-green-100 dark:bg-green-900/30',
       badgeBorder: 'border-green-600',
     },
-  } as const;
+  };
 
   const copyToClipboard = () => {
     if (password) navigator.clipboard.writeText(password);
