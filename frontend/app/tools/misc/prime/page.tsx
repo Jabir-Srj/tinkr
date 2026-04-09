@@ -57,7 +57,7 @@ export default function PrimeNumberPage() {
                 type="number"
                 value={number}
                 onChange={(e) => setNumber(parseInt(e.target.value) || 0)}
-                className="w-full px-4 py-2 border border-gray-300 dark:border-slate-600 rounded-lg bg-white dark:bg-slate-800 text-gray-900 dark:text-gray-100 focus:ring-2 focus:ring-blue-500 focus:border-transparent"
+                className="w-full px-4 py-2 border border-border rounded-lg bg-background text-foreground focus:ring-2 focus:ring-blue-500 focus:border-transparent"
               />
             </InputGroup>
 
@@ -123,24 +123,24 @@ export default function PrimeNumberPage() {
               <ToolCard title="Properties">
                 <div className="space-y-2 text-sm">
                   <div className="flex justify-between">
-                    <span className="text-gray-600 dark:text-gray-400">Number</span>
-                    <span className="font-mono font-bold text-gray-900 dark:text-gray-100">{numVal}</span>
+                    <span className="text-muted-foreground">Number</span>
+                    <span className="font-mono font-bold text-foreground">{numVal}</span>
                   </div>
                   <div className="flex justify-between">
-                    <span className="text-gray-600 dark:text-gray-400">Factor Count</span>
-                    <span className="font-mono font-bold text-gray-900 dark:text-gray-100">
+                    <span className="text-muted-foreground">Factor Count</span>
+                    <span className="font-mono font-bold text-foreground">
                       {factors.length}
                     </span>
                   </div>
                   <div className="flex justify-between">
-                    <span className="text-gray-600 dark:text-gray-400">Is Even</span>
-                    <span className="font-bold text-gray-900 dark:text-gray-100">
+                    <span className="text-muted-foreground">Is Even</span>
+                    <span className="font-bold text-foreground">
                       {numVal % 2 === 0 ? 'Yes' : 'No'}
                     </span>
                   </div>
                   <div className="flex justify-between">
-                    <span className="text-gray-600 dark:text-gray-400">Square Root</span>
-                    <span className="font-mono font-bold text-gray-900 dark:text-gray-100">
+                    <span className="text-muted-foreground">Square Root</span>
+                    <span className="font-mono font-bold text-foreground">
                       {Math.sqrt(numVal).toFixed(2)}
                     </span>
                   </div>
@@ -149,8 +149,8 @@ export default function PrimeNumberPage() {
 
               {/* Examples */}
               <ToolCard title="Prime Examples">
-                <p className="text-xs text-gray-600 dark:text-gray-400 mb-2">First 20 primes:</p>
-                <p className="font-mono text-xs text-gray-900 dark:text-gray-100">
+                <p className="text-xs text-muted-foreground mb-2">First 20 primes:</p>
+                <p className="font-mono text-xs text-foreground">
                   2, 3, 5, 7, 11, 13, 17, 19, 23, 29, 31, 37, 41, 43, 47, 53, 59, 61, 67, 71
                 </p>
               </ToolCard>

@@ -92,13 +92,13 @@ export default function ColorConverterPro() {
 
   return (
     <LegacyToolWrapper>
-      <div className="min-h-screen bg-white p-4 md:p-8">
+      <div className="min-h-screen bg-background text-foreground p-4 md:p-8">
         <div className="max-w-2xl mx-auto">
-          <div className="border border-gray-300 p-6 bg-white rounded-lg shadow-lg">
-            <h1 className="text-3xl font-bold text-gray-900 mb-2 flex items-center gap-2">
+          <div className="border border-border p-6 bg-secondary-bg rounded-lg shadow-lg">
+            <h1 className="text-3xl font-bold text-foreground mb-2 flex items-center gap-2">
               <span>🎨</span> Color Converter Pro
             </h1>
-            <p className="text-gray-600 mb-6">HEX ↔ RGB ↔ HSL conversion</p>
+            <p className="text-muted-foreground mb-6">HEX ↔ RGB ↔ HSL conversion</p>
 
             {/* Color Preview */}
             <div
@@ -107,14 +107,14 @@ export default function ColorConverterPro() {
             />
 
             {/* HEX */}
-            <div className="bg-gray-50 border border-gray-300 p-4 rounded mb-6">
-              <label className="block text-sm font-medium text-gray-700 mb-2">HEXADECIMAL</label>
+            <div className="bg-background border border-border p-4 rounded mb-6">
+              <label className="block text-sm font-medium text-muted-foreground mb-2">HEXADECIMAL</label>
               <div className="flex gap-2">
                 <input
                   type="text"
                   value={hex}
                   onChange={(e) => handleHexChange(e.target.value)}
-                  className="flex-1 bg-white border border-gray-300 text-gray-900 p-3 rounded font-mono focus:outline-none focus:ring-2 focus:ring-accent"
+                  className="flex-1 bg-secondary-bg border border-border text-foreground p-3 rounded font-mono focus:outline-none focus:ring-2 focus:ring-accent"
                 />
                 <button
                   onClick={() => copyToClipboard(hex)}
@@ -130,16 +130,16 @@ export default function ColorConverterPro() {
               {['r', 'g', 'b'].map((key) => (
                 <div
                   key={key}
-                  className="bg-gray-50 border border-gray-300 p-4 rounded"
+                  className="bg-background border border-border p-4 rounded"
                 >
-                  <label className="block text-sm font-medium text-gray-700 mb-2 uppercase">{key}</label>
+                  <label className="block text-sm font-medium text-muted-foreground mb-2 uppercase">{key}</label>
                   <input
                     type="number"
                     min="0"
                     max="255"
                     value={rgb[key as 'r' | 'g' | 'b']}
                     onChange={(e) => handleRgbChange(key as 'r' | 'g' | 'b', parseInt(e.target.value) || 0)}
-                    className="w-full bg-white border border-gray-300 text-gray-900 p-3 rounded font-mono focus:outline-none focus:ring-2 focus:ring-accent"
+                    className="w-full bg-secondary-bg border border-border text-foreground p-3 rounded font-mono focus:outline-none focus:ring-2 focus:ring-accent"
                   />
                   <button
                     onClick={() => copyToClipboard(`rgb(${rgb.r}, ${rgb.g}, ${rgb.b})`)}
@@ -160,9 +160,9 @@ export default function ColorConverterPro() {
               ].map(({ key, label, max }) => (
                 <div
                   key={key}
-                  className="bg-gray-50 border border-gray-300 p-4 rounded"
+                  className="bg-background border border-border p-4 rounded"
                 >
-                  <label className="block text-sm font-medium text-gray-700 mb-2">{label}</label>
+                  <label className="block text-sm font-medium text-muted-foreground mb-2">{label}</label>
                   <input
                     type="range"
                     min="0"
@@ -171,7 +171,7 @@ export default function ColorConverterPro() {
                     onChange={(e) => handleHslChange(key as 'h' | 's' | 'l', parseInt(e.target.value))}
                     className="w-full"
                   />
-                  <div className="text-center text-gray-700 font-mono mt-2 text-sm">
+                  <div className="text-center text-foreground font-mono mt-2 text-sm">
                     {hsl[key as 'h' | 's' | 'l']}
                   </div>
                 </div>
@@ -179,10 +179,10 @@ export default function ColorConverterPro() {
             </div>
 
             {/* Formats */}
-            <div className="space-y-2 p-4 bg-gray-50 border border-gray-300 rounded">
-              <div className="text-sm text-gray-700 font-mono">HEX: {hex}</div>
-              <div className="text-sm text-gray-700 font-mono">RGB: rgb({rgb.r}, {rgb.g}, {rgb.b})</div>
-              <div className="text-sm text-gray-700 font-mono">HSL: hsl({hsl.h}°, {hsl.s}%, {hsl.l}%)</div>
+            <div className="space-y-2 p-4 bg-background border border-border rounded">
+              <div className="text-sm text-foreground font-mono">HEX: {hex}</div>
+              <div className="text-sm text-foreground font-mono">RGB: rgb({rgb.r}, {rgb.g}, {rgb.b})</div>
+              <div className="text-sm text-foreground font-mono">HSL: hsl({hsl.h}°, {hsl.s}%, {hsl.l}%)</div>
             </div>
           </div>
         </div>

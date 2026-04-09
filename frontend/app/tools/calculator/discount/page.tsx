@@ -86,18 +86,18 @@ export default function DiscountCalculatorPage() {
                 </span>
               </div>
               <div className="flex justify-between items-center p-3 bg-red-100 dark:bg-red-900/30 rounded">
-                <span className="font-semibold text-gray-900 dark:text-gray-100">
+                <span className="font-semibold text-foreground">
                   Discount ({discountPercent}%)
                 </span>
-                <span className="font-mono font-bold text-red-600 dark:text-red-400">
+                <span className="font-mono font-bold text-red-700 dark:text-red-400">
                   -${discountAmount.toFixed(2)}
                 </span>
               </div>
               <div className="flex justify-between items-center p-3 bg-green-100 dark:bg-green-900/30 rounded">
-                <span className="font-semibold text-gray-900 dark:text-gray-100">
+                <span className="font-semibold text-foreground">
                   You Pay
                 </span>
-                <span className="font-mono font-bold text-green-600 dark:text-green-400">
+                <span className="font-mono font-bold text-green-700 dark:text-green-400">
                   ${finalPrice.toFixed(2)}
                 </span>
               </div>

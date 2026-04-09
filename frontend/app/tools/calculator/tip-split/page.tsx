@@ -112,26 +112,26 @@ export default function TipSplitCalculatorPage() {
                 </span>
               </div>
               <div className="flex justify-between items-center p-3 bg-green-100 dark:bg-green-900/30 rounded">
-                <span className="font-semibold text-gray-900 dark:text-gray-100">
+                <span className="font-semibold text-foreground">
                   Tip ({tipPercent}%)
                 </span>
-                <span className="font-mono font-bold text-green-600 dark:text-green-400">
+                <span className="font-mono font-bold text-green-700 dark:text-green-400">
                   ${tipAmount.toFixed(2)}
                 </span>
               </div>
               <div className="flex justify-between items-center p-3 bg-blue-100 dark:bg-blue-900/30 rounded">
-                <span className="font-semibold text-gray-900 dark:text-gray-100">
+                <span className="font-semibold text-foreground">
                   Total
                 </span>
-                <span className="font-mono font-bold text-blue-600 dark:text-blue-400">
+                <span className="font-mono font-bold text-blue-700 dark:text-blue-400">
                   ${totalAmount.toFixed(2)}
                 </span>
               </div>
               <div className="flex justify-between items-center p-3 bg-purple-100 dark:bg-purple-900/30 rounded">
-                <span className="font-semibold text-gray-900 dark:text-gray-100">
+                <span className="font-semibold text-foreground">
                   Per Person ({people})
                 </span>
-                <span className="font-mono font-bold text-purple-600 dark:text-purple-400">
+                <span className="font-mono font-bold text-purple-700 dark:text-purple-400">
                   ${perPerson.toFixed(2)}
                 </span>
               </div>

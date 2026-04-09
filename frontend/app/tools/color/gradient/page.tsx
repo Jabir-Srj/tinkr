@@ -148,7 +148,12 @@ export default function GradientGeneratorPage() {
                     background: `linear-gradient(135deg, ${preset.c1}, ${preset.c2})`,
                   }}
                 >
-                  <p className="text-white text-sm font-bold drop-shadow">{preset.name}</p>
+                  <p
+                    className="text-sm font-bold"
+                    style={{ color: '#111827' }}
+                  >
+                    {preset.name}
+                  </p>
                 </button>
               ))}
             </div>

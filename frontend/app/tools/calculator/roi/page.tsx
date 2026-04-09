@@ -100,18 +100,18 @@ export default function ROICalculatorPage() {
                 </span>
               </div>
               <div className={`flex justify-between items-center p-3 rounded ${return_value >= 0 ? 'bg-green-100 dark:bg-green-900/30' : 'bg-red-100 dark:bg-red-900/30'}`}>
-                <span className="font-semibold text-gray-900 dark:text-gray-100">
+                <span className="font-semibold text-foreground">
                   Profit/Loss
                 </span>
-                <span className={`font-mono font-bold ${return_value >= 0 ? 'text-green-600 dark:text-green-400' : 'text-red-600 dark:text-red-400'}`}>
+                <span className={`font-mono font-bold ${return_value >= 0 ? 'text-green-700 dark:text-green-400' : 'text-red-700 dark:text-red-400'}`}>
                   ${return_value.toLocaleString()}
                 </span>
               </div>
               <div className="flex justify-between items-center p-3 bg-blue-100 dark:bg-blue-900/30 rounded">
-                <span className="font-semibold text-gray-900 dark:text-gray-100">
+                <span className="font-semibold text-foreground">
                   Total Value
                 </span>
-                <span className="font-mono font-bold text-blue-600 dark:text-blue-400">
+                <span className="font-mono font-bold text-blue-700 dark:text-blue-400">
                   ${totalReturn.toLocaleString()}
                 </span>
               </div>

@@ -52,23 +52,34 @@ function ThemeToggle() {
 
   useEffect(() => {
     setMounted(true);
-    const html = document.documentElement;
-    const isDarkMode = html.classList.contains('dark');
-    setIsDark(isDarkMode);
+    const saved = localStorage.getItem('tinkr-theme');
+    const systemDark = window.matchMedia('(prefers-color-scheme: dark)').matches;
+    const shouldBeDark = saved ? saved === 'dark' : systemDark;
+    applyTheme(shouldBeDark);
+    setIsDark(shouldBeDark);
   }, []);
 
-  const toggleTheme = () => {
+  const applyTheme = (dark: boolean) => {
     const html = document.documentElement;
-    const newIsDark = !isDark;
+    const body = document.body;
 
-    if (newIsDark) {
+    html.classList.remove('dark', 'light');
+    body.classList.remove('dark', 'light');
+
+    if (dark) {
       html.classList.add('dark');
+      body.classList.add('dark');
       localStorage.setItem('tinkr-theme', 'dark');
     } else {
-      html.classList.remove('dark');
+      html.classList.add('light');
+      body.classList.add('light');
       localStorage.setItem('tinkr-theme', 'light');
     }
+  };
 
+  const toggleTheme = () => {
+    const newIsDark = !isDark;
+    applyTheme(newIsDark);
     setIsDark(newIsDark);
   };
 

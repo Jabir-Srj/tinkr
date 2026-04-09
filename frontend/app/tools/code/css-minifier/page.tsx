@@ -42,9 +42,9 @@ export default function CSSMinifierPage() {
             <textarea
               value={css}
               onChange={(e) => setCSS(e.target.value)}
-              className="w-full px-4 py-2 border border-gray-300 dark:border-slate-600 rounded-lg bg-white dark:bg-slate-800 text-gray-900 dark:text-gray-100 resize-none h-96 font-mono text-sm"
+              className="w-full px-4 py-2 border border-border rounded-lg bg-background text-foreground resize-none h-96 font-mono text-sm"
             />
-            <p className="text-xs text-gray-500 mt-2">{css.length} characters</p>
+            <p className="text-xs text-muted-foreground mt-2">{css.length} characters</p>
           </ToolCard>
         </div>
 
@@ -55,7 +55,7 @@ export default function CSSMinifierPage() {
               <textarea
                 value={minified}
                 readOnly
-                className="w-full px-4 py-2 border border-gray-300 dark:border-slate-600 rounded-lg bg-gray-50 dark:bg-slate-900 text-gray-900 dark:text-gray-100 resize-none h-72 font-mono text-sm"
+                className="w-full px-4 py-2 border border-border rounded-lg bg-secondary-bg text-foreground resize-none h-72 font-mono text-sm"
               />
               <button
                 onClick={() => copyToClipboard(minified)}
@@ -64,18 +64,18 @@ export default function CSSMinifierPage() {
                 <Copy size={16} />
               </button>
             </div>
-            <p className="text-xs text-gray-500 mt-2">{minified.length} characters</p>
+            <p className="text-xs text-muted-foreground mt-2">{minified.length} characters</p>
           </ToolCard>
 
           <ToolCard title="Stats">
             <div className="space-y-2">
-              <div className="flex justify-between items-center p-3 bg-gray-100 dark:bg-slate-900 rounded">
-                <span className="font-semibold">Size Reduction</span>
+              <div className="flex justify-between items-center p-3 bg-secondary-bg border border-border rounded">
+                <span className="font-semibold text-foreground">Size Reduction</span>
                 <span className="text-lg font-bold text-green-600">{savings}%</span>
               </div>
-              <div className="flex justify-between items-center p-3 bg-gray-100 dark:bg-slate-900 rounded">
-                <span className="font-semibold">Bytes Saved</span>
-                <span className="font-mono">{css.length - minified.length}</span>
+              <div className="flex justify-between items-center p-3 bg-secondary-bg border border-border rounded">
+                <span className="font-semibold text-foreground">Bytes Saved</span>
+                <span className="font-mono text-foreground">{css.length - minified.length}</span>
               </div>
             </div>
           </ToolCard>

@@ -83,12 +83,12 @@ export default function ColorPickerPage() {
                   type="color"
                   value={color}
                   onChange={(e) => setColor(e.target.value)}
-                  className="w-full h-32 rounded-lg cursor-pointer border-2 border-gray-200 dark:border-slate-700"
+                  className="w-full h-32 rounded-lg cursor-pointer border-2 border-border bg-secondary-bg"
                 />
               </div>
 
               <div>
-                <label className="text-sm font-semibold text-gray-700 dark:text-gray-300 mb-2 block">
+                <label className="text-sm font-semibold text-muted-foreground mb-2 block">
                   HEX
                 </label>
                 <input
@@ -99,7 +99,7 @@ export default function ColorPickerPage() {
                       setColor(e.target.value);
                     }
                   }}
-                  className="w-full px-4 py-2 border border-gray-300 dark:border-slate-600 rounded-lg bg-white dark:bg-slate-800 text-gray-900 dark:text-gray-100 font-mono focus:ring-2 focus:ring-blue-500 focus:border-transparent"
+                  className="w-full px-4 py-2 border border-border rounded-lg bg-background text-foreground font-mono focus:ring-2 focus:ring-accent focus:border-transparent"
                 />
               </div>
             </div>
@@ -111,10 +111,10 @@ export default function ColorPickerPage() {
           <ToolCard title="Color Formats">
             <div className="space-y-4">
               {/* HEX */}
-              <div className="flex items-center gap-2 p-4 bg-gray-100 dark:bg-slate-900 rounded-lg">
+              <div className="flex items-center gap-2 p-4 bg-secondary-bg border border-border rounded-lg">
                 <div className="flex-1">
-                  <p className="text-xs text-gray-600 dark:text-gray-400 mb-1">HEX</p>
-                  <p className="font-mono font-bold text-lg text-gray-900 dark:text-gray-100">
+                  <p className="text-xs text-muted-foreground mb-1">HEX</p>
+                  <p className="font-mono font-bold text-lg text-foreground">
                     {color}
                   </p>
                 </div>
@@ -127,10 +127,10 @@ export default function ColorPickerPage() {
               </div>
 
               {/* RGB */}
-              <div className="flex items-center gap-2 p-4 bg-gray-100 dark:bg-slate-900 rounded-lg">
+              <div className="flex items-center gap-2 p-4 bg-secondary-bg border border-border rounded-lg">
                 <div className="flex-1">
-                  <p className="text-xs text-gray-600 dark:text-gray-400 mb-1">RGB</p>
-                  <p className="font-mono font-bold text-lg text-gray-900 dark:text-gray-100">
+                  <p className="text-xs text-muted-foreground mb-1">RGB</p>
+                  <p className="font-mono font-bold text-lg text-foreground">
                     rgb({rgb.r}, {rgb.g}, {rgb.b})
                   </p>
                 </div>
@@ -143,10 +143,10 @@ export default function ColorPickerPage() {
               </div>
 
               {/* HSL */}
-              <div className="flex items-center gap-2 p-4 bg-gray-100 dark:bg-slate-900 rounded-lg">
+              <div className="flex items-center gap-2 p-4 bg-secondary-bg border border-border rounded-lg">
                 <div className="flex-1">
-                  <p className="text-xs text-gray-600 dark:text-gray-400 mb-1">HSL</p>
-                  <p className="font-mono font-bold text-lg text-gray-900 dark:text-gray-100">
+                  <p className="text-xs text-muted-foreground mb-1">HSL</p>
+                  <p className="font-mono font-bold text-lg text-foreground">
                     hsl({hsl.h}, {hsl.s}%, {hsl.l}%)
                   </p>
                 </div>
@@ -159,11 +159,11 @@ export default function ColorPickerPage() {
               </div>
 
               {/* RGB Sliders */}
-              <div className="mt-6 space-y-4 pt-4 border-t border-gray-200 dark:border-slate-700">
-                <h4 className="font-semibold text-gray-900 dark:text-white">RGB Sliders</h4>
+              <div className="mt-6 space-y-4 pt-4 border-t border-border">
+                <h4 className="font-semibold text-foreground">RGB Sliders</h4>
 
                 <div>
-                  <label className="text-sm text-gray-700 dark:text-gray-300 mb-2 block">
+                  <label className="text-sm text-muted-foreground mb-2 block">
                     Red: {rgb.r}
                   </label>
                   <input
@@ -179,7 +179,7 @@ export default function ColorPickerPage() {
                 </div>
 
                 <div>
-                  <label className="text-sm text-gray-700 dark:text-gray-300 mb-2 block">
+                  <label className="text-sm text-muted-foreground mb-2 block">
                     Green: {rgb.g}
                   </label>
                   <input
@@ -195,7 +195,7 @@ export default function ColorPickerPage() {
                 </div>
 
                 <div>
-                  <label className="text-sm text-gray-700 dark:text-gray-300 mb-2 block">
+                  <label className="text-sm text-muted-foreground mb-2 block">
                     Blue: {rgb.b}
                   </label>
                   <input

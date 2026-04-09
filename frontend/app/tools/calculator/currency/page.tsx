@@ -48,7 +48,7 @@ export default function CurrencyConverterPage() {
                 type="number"
                 value={amount}
                 onChange={(e) => setAmount(parseFloat(e.target.value) || 0)}
-                className="w-full px-4 py-2 border border-gray-300 dark:border-slate-600 rounded-lg bg-white dark:bg-slate-800 text-gray-900 dark:text-gray-100"
+                className="w-full px-4 py-2 border border-border rounded-lg bg-background text-foreground"
               />
             </InputGroup>
 
@@ -56,7 +56,7 @@ export default function CurrencyConverterPage() {
               <select
                 value={from}
                 onChange={(e) => setFrom(e.target.value)}
-                className="w-full px-4 py-2 border border-gray-300 dark:border-slate-600 rounded-lg bg-white dark:bg-slate-800 text-gray-900 dark:text-gray-100"
+                className="w-full px-4 py-2 border border-border rounded-lg bg-background text-foreground"
               >
                 {Object.keys(currencies).map((curr) => (
                   <option key={curr} value={curr}>
@@ -70,7 +70,7 @@ export default function CurrencyConverterPage() {
               <select
                 value={to}
                 onChange={(e) => setTo(e.target.value)}
-                className="w-full px-4 py-2 border border-gray-300 dark:border-slate-600 rounded-lg bg-white dark:bg-slate-800 text-gray-900 dark:text-gray-100"
+                className="w-full px-4 py-2 border border-border rounded-lg bg-background text-foreground"
               >
                 {Object.keys(currencies).map((curr) => (
                   <option key={curr} value={curr}>
@@ -86,19 +86,19 @@ export default function CurrencyConverterPage() {
         <div className="lg:col-span-2 space-y-4">
           <ToolCard>
             <div className="text-center">
-              <p className="text-lg text-gray-600 dark:text-gray-400 mb-2">
+              <p className="text-lg text-muted-foreground mb-2">
                 {amount} {from}
               </p>
               <p className="text-5xl font-bold text-blue-600 dark:text-blue-400 mb-2">
                 {converted}
               </p>
-              <p className="text-lg text-gray-600 dark:text-gray-400">{to}</p>
+              <p className="text-lg text-muted-foreground">{to}</p>
             </div>
           </ToolCard>
 
           <ToolCard>
             <div className="relative">
-              <div className="bg-gray-100 dark:bg-slate-900 rounded-lg p-4 font-mono text-sm text-gray-900 dark:text-gray-100">
+              <div className="bg-secondary-bg border border-border rounded-lg p-4 font-mono text-sm text-foreground">
                 {amount} {from} = {converted} {to}
               </div>
               <button
@@ -117,14 +117,14 @@ export default function CurrencyConverterPage() {
               {Object.entries(currencies).map(([curr, rate]) => (
                 <div
                   key={curr}
-                  className="flex justify-between p-2 bg-gray-100 dark:bg-slate-900 rounded"
+                  className="flex justify-between p-2 bg-secondary-bg border border-border rounded"
                 >
-                  <span className="font-semibold">{curr}</span>
-                  <span className="text-gray-600 dark:text-gray-400">{rate}</span>
+                  <span className="font-semibold text-foreground">{curr}</span>
+                  <span className="text-foreground">{rate}</span>
                 </div>
               ))}
             </div>
-            <p className="text-xs text-gray-500 mt-2">* Rates are approximate</p>
+            <p className="text-xs text-muted-foreground mt-2">* Rates are approximate</p>
           </ToolCard>
         </div>
       </div>

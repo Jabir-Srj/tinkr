@@ -27,13 +27,18 @@ export function ThemeProvider({ children }: { children: ReactNode }) {
   // Apply theme to DOM
   const applyTheme = useCallback((newTheme: Theme) => {
     const html = document.documentElement;
+    const body = document.body;
+
+    // Keep both roots in sync so dark:* utilities never get stuck on one node.
+    html.classList.remove('dark', 'light');
+    body.classList.remove('dark', 'light');
 
     if (newTheme === 'dark') {
-      html.classList.remove('light');
       html.classList.add('dark');
+      body.classList.add('dark');
     } else {
-      html.classList.remove('dark');
       html.classList.add('light');
+      body.classList.add('light');
     }
 
     localStorage.setItem('tinkr-theme', newTheme);

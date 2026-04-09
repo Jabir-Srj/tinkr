@@ -48,7 +48,7 @@ export default function ASCIICodePage() {
                 value={inputChar}
                 onChange={handleCharInput}
                 placeholder="Enter a character"
-                className="w-full px-4 py-3 border border-gray-300 dark:border-slate-600 rounded-lg bg-white dark:bg-slate-800 text-gray-900 dark:text-gray-100 focus:ring-2 focus:ring-blue-500 focus:border-transparent text-2xl text-center font-bold"
+                className="w-full px-4 py-3 border border-border rounded-lg bg-background text-foreground focus:ring-2 focus:ring-blue-500 focus:border-transparent text-2xl text-center font-bold"
               />
             </InputGroup>
 
@@ -59,7 +59,7 @@ export default function ASCIICodePage() {
                 max="127"
                 value={asciiCode}
                 onChange={handleCodeInput}
-                className="w-full px-4 py-3 border border-gray-300 dark:border-slate-600 rounded-lg bg-white dark:bg-slate-800 text-gray-900 dark:text-gray-100 focus:ring-2 focus:ring-blue-500 focus:border-transparent"
+                className="w-full px-4 py-3 border border-border rounded-lg bg-background text-foreground focus:ring-2 focus:ring-blue-500 focus:border-transparent"
               />
             </InputGroup>
           </ToolCard>
@@ -67,15 +67,15 @@ export default function ASCIICodePage() {
 
         <div className="space-y-4">
           <ToolCard title="Character Details">
-            <div className="p-4 bg-blue-50 dark:bg-slate-800 rounded-lg border border-border text-center">
-              <p className="text-xs text-blue-600 dark:text-blue-300 mb-1">Character</p>
-              <p className="text-5xl font-bold text-gray-900 dark:text-gray-100 mb-3">{inputChar || '—'}</p>
-              <p className="text-xs text-blue-600 dark:text-blue-300">ASCII: {asciiCode}</p>
+            <div className="p-4 bg-secondary-bg rounded-lg border border-border text-center">
+              <p className="text-xs text-muted-foreground mb-1">Character</p>
+              <p className="text-5xl font-bold text-foreground mb-3">{inputChar || '—'}</p>
+              <p className="text-xs text-muted-foreground">ASCII: {asciiCode}</p>
             </div>
           </ToolCard>
 
           <ToolCard title="Reference">
-            <div className="text-sm space-y-2 text-gray-700 dark:text-gray-300">
+            <div className="text-sm space-y-2 text-foreground">
               <p><strong>Common Codes:</strong></p>
               <ul className="text-xs space-y-1 ml-2">
                 <li>32: Space</li>

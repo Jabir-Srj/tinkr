@@ -41,6 +41,23 @@ export default function PasswordGeneratorPage() {
   };
 
   const strength = password ? checkStrength(password) : null;
+  const strengthStyles = {
+    red: {
+      text: 'text-red-600 dark:text-red-400',
+      badgeBg: 'bg-red-100 dark:bg-red-900/30',
+      badgeBorder: 'border-red-600',
+    },
+    yellow: {
+      text: 'text-yellow-600 dark:text-yellow-400',
+      badgeBg: 'bg-yellow-100 dark:bg-yellow-900/30',
+      badgeBorder: 'border-yellow-600',
+    },
+    green: {
+      text: 'text-green-600 dark:text-green-400',
+      badgeBg: 'bg-green-100 dark:bg-green-900/30',
+      badgeBorder: 'border-green-600',
+    },
+  } as const;
 
   const copyToClipboard = () => {
     if (password) navigator.clipboard.writeText(password);
@@ -88,7 +105,7 @@ export default function PasswordGeneratorPage() {
                   onChange={(e) => setUppercase(e.target.checked)}
                   className="w-4 h-4 rounded"
                 />
-                <span className="text-sm text-gray-700 dark:text-gray-300">Uppercase (A-Z)</span>
+                <span className="text-sm text-foreground">Uppercase (A-Z)</span>
               </label>
 
               <label className="flex items-center gap-2 cursor-pointer">
@@ -98,7 +115,7 @@ export default function PasswordGeneratorPage() {
                   onChange={(e) => setLowercase(e.target.checked)}
                   className="w-4 h-4 rounded"
                 />
-                <span className="text-sm text-gray-700 dark:text-gray-300">Lowercase (a-z)</span>
+                <span className="text-sm text-foreground">Lowercase (a-z)</span>
               </label>
 
               <label className="flex items-center gap-2 cursor-pointer">
@@ -108,7 +125,7 @@ export default function PasswordGeneratorPage() {
                   onChange={(e) => setNumbers(e.target.checked)}
                   className="w-4 h-4 rounded"
                 />
-                <span className="text-sm text-gray-700 dark:text-gray-300">Numbers (0-9)</span>
+                <span className="text-sm text-foreground">Numbers (0-9)</span>
               </label>
 
               <label className="flex items-center gap-2 cursor-pointer">
@@ -118,7 +135,7 @@ export default function PasswordGeneratorPage() {
                   onChange={(e) => setSymbols(e.target.checked)}
                   className="w-4 h-4 rounded"
                 />
-                <span className="text-sm text-gray-700 dark:text-gray-300">Symbols (!@#$...)</span>
+                <span className="text-sm text-foreground">Symbols (!@#$...)</span>
               </label>
             </div>
 
@@ -155,15 +172,15 @@ export default function PasswordGeneratorPage() {
                 <ToolCard>
                   <div className="flex items-center justify-between gap-4">
                     <div>
-                      <p className="text-sm text-gray-600 dark:text-gray-400 mb-1">Strength</p>
-                      <p className={`font-bold text-lg text-${strength.color}-600 dark:text-${strength.color}-400`}>
+                      <p className="text-sm text-muted-foreground mb-1">Strength</p>
+                      <p className={`font-bold text-lg ${strengthStyles[strength.color].text}`}>
                         {strength.level}
                       </p>
                     </div>
                     <div
-                      className={`w-16 h-16 rounded-full flex items-center justify-center bg-${strength.color}-100 dark:bg-${strength.color}-900/30`}
+                      className={`w-16 h-16 rounded-full flex items-center justify-center ${strengthStyles[strength.color].badgeBg}`}
                     >
-                      <div className={`w-12 h-12 rounded-full border-4 border-${strength.color}-600`} />
+                      <div className={`w-12 h-12 rounded-full border-4 ${strengthStyles[strength.color].badgeBorder}`} />
                     </div>
                   </div>
                 </ToolCard>
@@ -173,25 +190,25 @@ export default function PasswordGeneratorPage() {
               <ToolCard title="Character Analysis">
                 <div className="space-y-2 text-sm">
                   <div className="flex justify-between">
-                    <span className="text-gray-600 dark:text-gray-400">Uppercase</span>
+                    <span className="text-muted-foreground">Uppercase</span>
                     <span className="font-mono font-bold text-gray-900 dark:text-gray-100">
                       {(password.match(/[A-Z]/g) || []).length}
                     </span>
                   </div>
                   <div className="flex justify-between">
-                    <span className="text-gray-600 dark:text-gray-400">Lowercase</span>
+                    <span className="text-muted-foreground">Lowercase</span>
                     <span className="font-mono font-bold text-gray-900 dark:text-gray-100">
                       {(password.match(/[a-z]/g) || []).length}
                     </span>
                   </div>
                   <div className="flex justify-between">
-                    <span className="text-gray-600 dark:text-gray-400">Numbers</span>
+                    <span className="text-muted-foreground">Numbers</span>
                     <span className="font-mono font-bold text-gray-900 dark:text-gray-100">
                       {(password.match(/[0-9]/g) || []).length}
                     </span>
                   </div>
                   <div className="flex justify-between">
-                    <span className="text-gray-600 dark:text-gray-400">Symbols</span>
+                    <span className="text-muted-foreground">Symbols</span>
                     <span className="font-mono font-bold text-gray-900 dark:text-gray-100">
                       {(password.match(/[^a-zA-Z0-9]/g) || []).length}
                     </span>
@@ -200,7 +217,7 @@ export default function PasswordGeneratorPage() {
               </ToolCard>
 
               <ToolCard title="Tips">
-                <ul className="space-y-1 text-xs text-gray-600 dark:text-gray-400">
+                <ul className="space-y-1 text-xs text-muted-foreground">
                   <li>• Use at least 12 characters</li>
                   <li>• Mix uppercase and lowercase</li>
                   <li>• Include numbers and symbols</li>

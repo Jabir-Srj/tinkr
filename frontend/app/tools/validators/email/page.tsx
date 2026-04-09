@@ -33,7 +33,7 @@ export default function EmailValidatorPage() {
                 value={email}
                 onChange={(e) => setEmail(e.target.value)}
                 placeholder="Enter email address..."
-                className="w-full px-4 py-2 border border-gray-300 dark:border-slate-600 rounded-lg bg-white dark:bg-slate-800 text-gray-900 dark:text-gray-100 focus:ring-2 focus:ring-blue-500 focus:border-transparent"
+                className="w-full px-4 py-2 border border-border rounded-lg bg-background text-foreground focus:ring-2 focus:ring-blue-500 focus:border-transparent"
               />
             </InputGroup>
           </ToolCard>
@@ -76,24 +76,24 @@ export default function EmailValidatorPage() {
                     const [domainName, tld] = domain?.split('.').reverse() || [undefined, undefined];
                     return (
                       <>
-                        <div className="p-3 bg-gray-100 dark:bg-slate-900 rounded">
-                          <p className="text-xs text-gray-600 dark:text-gray-400 mb-1">Local Part</p>
-                          <p className="font-mono font-bold text-gray-900 dark:text-gray-100 break-all">
+                        <div className="p-3 bg-secondary-bg border border-border rounded">
+                          <p className="text-xs text-muted-foreground mb-1">Local Part</p>
+                          <p className="font-mono font-bold text-foreground break-all">
                             {local}
                           </p>
                         </div>
                         {domainName && (
-                          <div className="p-3 bg-gray-100 dark:bg-slate-900 rounded">
-                            <p className="text-xs text-gray-600 dark:text-gray-400 mb-1">Domain</p>
-                            <p className="font-mono font-bold text-gray-900 dark:text-gray-100">
+                          <div className="p-3 bg-secondary-bg border border-border rounded">
+                            <p className="text-xs text-muted-foreground mb-1">Domain</p>
+                            <p className="font-mono font-bold text-foreground">
                               {domainName}
                             </p>
                           </div>
                         )}
                         {tld && (
-                          <div className="p-3 bg-gray-100 dark:bg-slate-900 rounded">
-                            <p className="text-xs text-gray-600 dark:text-gray-400 mb-1">TLD</p>
-                            <p className="font-mono font-bold text-gray-900 dark:text-gray-100">
+                          <div className="p-3 bg-secondary-bg border border-border rounded">
+                            <p className="text-xs text-muted-foreground mb-1">TLD</p>
+                            <p className="font-mono font-bold text-foreground">
                               {tld}
                             </p>
                           </div>
@@ -103,13 +103,13 @@ export default function EmailValidatorPage() {
                   })()}
                 </div>
               ) : (
-                <p className="text-sm text-gray-600 dark:text-gray-400">Add @ to see components</p>
+                <p className="text-sm text-muted-foreground">Add @ to see components</p>
               )}
             </ToolCard>
 
             {/* Rules */}
             <ToolCard title="Validation Rules">
-              <ul className="space-y-2 text-sm text-gray-600 dark:text-gray-400">
+              <ul className="space-y-2 text-sm text-muted-foreground">
                 <li className={`flex items-center gap-2 ${email.includes('@') ? 'text-green-600' : ''}`}>
                   ✓ Must contain @
                 </li>

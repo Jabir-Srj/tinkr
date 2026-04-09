@@ -73,7 +73,7 @@ export default function JSONValidatorPage() {
             <textarea
               value={json}
               onChange={(e) => validateJSON(e.target.value)}
-              className="w-full px-4 py-3 border border-gray-300 dark:border-slate-600 rounded-lg bg-white dark:bg-slate-800 text-gray-900 dark:text-gray-100 font-mono text-sm focus:ring-2 focus:ring-blue-500 focus:border-transparent resize-none h-96"
+              className="w-full px-4 py-3 border border-border rounded-lg bg-background text-foreground font-mono text-sm focus:ring-2 focus:ring-blue-500 focus:border-transparent resize-none h-96"
               placeholder="Paste JSON here..."
             />
 
@@ -119,7 +119,7 @@ export default function JSONValidatorPage() {
           {formatted && (
             <ToolCard title="Formatted Output">
               <div className="relative">
-                <div className="bg-gray-100 dark:bg-slate-900 rounded-lg p-4 font-mono text-sm text-gray-900 dark:text-gray-100 h-64 overflow-auto break-all whitespace-pre-wrap">
+                <div className="bg-secondary-bg border border-border rounded-lg p-4 font-mono text-sm text-foreground h-64 overflow-auto break-all whitespace-pre-wrap">
                   {formatted}
                 </div>
                 <button
@@ -137,20 +137,20 @@ export default function JSONValidatorPage() {
             <ToolCard title="JSON Statistics">
               <div className="space-y-2 text-sm">
                 <div className="flex justify-between">
-                  <span className="text-gray-600 dark:text-gray-400">Size:</span>
-                  <span className="font-mono font-bold text-gray-900 dark:text-gray-100">
+                  <span className="text-muted-foreground">Size:</span>
+                  <span className="font-mono font-bold text-foreground">
                     {(json.length / 1024).toFixed(2)} KB
                   </span>
                 </div>
                 <div className="flex justify-between">
-                  <span className="text-gray-600 dark:text-gray-400">Lines:</span>
-                  <span className="font-mono font-bold text-gray-900 dark:text-gray-100">
+                  <span className="text-muted-foreground">Lines:</span>
+                  <span className="font-mono font-bold text-foreground">
                     {json.split('\n').length}
                   </span>
                 </div>
                 <div className="flex justify-between">
-                  <span className="text-gray-600 dark:text-gray-400">Characters:</span>
-                  <span className="font-mono font-bold text-gray-900 dark:text-gray-100">
+                  <span className="text-muted-foreground">Characters:</span>
+                  <span className="font-mono font-bold text-foreground">
                     {json.length}
                   </span>
                 </div>

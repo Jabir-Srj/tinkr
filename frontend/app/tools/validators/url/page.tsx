@@ -42,7 +42,7 @@ export default function URLValidatorPage() {
                 value={url}
                 onChange={(e) => setUrl(e.target.value)}
                 placeholder="Enter URL..."
-                className="w-full px-4 py-2 border border-gray-300 dark:border-slate-600 rounded-lg bg-white dark:bg-slate-800 text-gray-900 dark:text-gray-100 focus:ring-2 focus:ring-blue-500 focus:border-transparent"
+                className="w-full px-4 py-2 border border-border rounded-lg bg-background text-foreground focus:ring-2 focus:ring-blue-500 focus:border-transparent"
               />
             </InputGroup>
           </ToolCard>
@@ -87,11 +87,11 @@ export default function URLValidatorPage() {
                   ].map((item) => (
                     <div
                       key={item.label}
-                      className="p-3 bg-gray-100 dark:bg-slate-900 rounded flex items-center justify-between"
+                      className="p-3 bg-secondary-bg border border-border rounded flex items-center justify-between"
                     >
                       <div>
-                        <p className="text-xs text-gray-600 dark:text-gray-400 mb-1">{item.label}</p>
-                        <p className="font-mono font-bold text-gray-900 dark:text-gray-100 break-all">
+                        <p className="text-xs text-muted-foreground mb-1">{item.label}</p>
+                        <p className="font-mono font-bold text-foreground break-all">
                           {item.value}
                         </p>
                       </div>
@@ -109,7 +109,7 @@ export default function URLValidatorPage() {
 
             {/* Rules */}
             <ToolCard title="Validation Rules">
-              <ul className="space-y-2 text-sm text-gray-600 dark:text-gray-400">
+              <ul className="space-y-2 text-sm text-muted-foreground">
                 <li className={`flex items-center gap-2 ${url.startsWith('http://') || url.startsWith('https://') ? 'text-green-600' : ''}`}>
                   ✓ Must have protocol (http:// or https://)
                 </li>

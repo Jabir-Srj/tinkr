@@ -46,7 +46,7 @@ export default function WordCountPage() {
               <textarea
                 value={text}
                 onChange={(e) => setText(e.target.value)}
-                className="w-full px-4 py-3 border border-gray-300 dark:border-slate-600 rounded-lg bg-white dark:bg-slate-800 text-gray-900 dark:text-gray-100 focus:ring-2 focus:ring-blue-500 focus:border-transparent resize-none h-64"
+                className="w-full px-4 py-3 border border-border rounded-lg bg-background text-foreground focus:ring-2 focus:ring-accent focus:border-transparent resize-none h-64"
                 placeholder="Paste or type your text here..."
               />
             </InputGroup>
@@ -60,11 +60,11 @@ export default function WordCountPage() {
             <ToolCard>
               <div className="space-y-3">
                 <div>
-                  <p className="text-xs text-gray-600 dark:text-gray-400 mb-1">Words</p>
+                  <p className="text-xs text-muted-foreground mb-1">Words</p>
                   <p className="text-4xl font-bold text-blue-600">{stats.words}</p>
                 </div>
                 <div>
-                  <p className="text-xs text-gray-600 dark:text-gray-400 mb-1">Characters</p>
+                  <p className="text-xs text-muted-foreground mb-1">Characters</p>
                   <p className="text-4xl font-bold text-teal-600">{stats.characters}</p>
                 </div>
               </div>
@@ -73,11 +73,11 @@ export default function WordCountPage() {
             <ToolCard>
               <div className="space-y-3">
                 <div>
-                  <p className="text-xs text-gray-600 dark:text-gray-400 mb-1">Characters (no spaces)</p>
+                  <p className="text-xs text-muted-foreground mb-1">Characters (no spaces)</p>
                   <p className="text-4xl font-bold text-blue-600">{stats.charactersNoSpaces}</p>
                 </div>
                 <div>
-                  <p className="text-xs text-gray-600 dark:text-gray-400 mb-1">Reading Time</p>
+                  <p className="text-xs text-muted-foreground mb-1">Reading Time</p>
                   <p className="text-4xl font-bold text-teal-600">{stats.readingTime}m</p>
                 </div>
               </div>
@@ -95,9 +95,9 @@ export default function WordCountPage() {
                 { label: 'Avg. Sentence Length', value: stats.averageSentenceLength },
                 { label: 'Density', value: ((stats.words / stats.lines) || 0).toFixed(1) },
               ].map((item) => (
-                <div key={item.label} className="p-3 bg-gray-100 dark:bg-slate-900 rounded">
-                  <p className="text-xs text-gray-600 dark:text-gray-400 mb-1">{item.label}</p>
-                  <p className="text-xl font-bold text-gray-900 dark:text-gray-100">{item.value}</p>
+                <div key={item.label} className="p-3 bg-secondary-bg border border-border rounded">
+                  <p className="text-xs text-muted-foreground mb-1">{item.label}</p>
+                  <p className="text-xl font-bold text-foreground">{item.value}</p>
                 </div>
               ))}
             </div>
@@ -113,8 +113,8 @@ export default function WordCountPage() {
                 { label: 'Special', count: (text.match(/[^\w\s]/g) || []).length, color: 'red' },
               ].map((item) => (
                 <div key={item.label} className="flex items-center justify-between">
-                  <span className="text-sm text-gray-600 dark:text-gray-400">{item.label}</span>
-                  <span className="text-lg font-bold text-gray-900 dark:text-gray-100">{item.count}</span>
+                  <span className="text-sm text-muted-foreground">{item.label}</span>
+                  <span className="text-lg font-bold text-foreground">{item.count}</span>
                 </div>
               ))}
             </div>
