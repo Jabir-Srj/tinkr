@@ -40,9 +40,11 @@ export default function RootLayout({
                 const theme = localStorage.getItem('tinkr-theme') || 
                   (window.matchMedia('(prefers-color-scheme: dark)').matches ? 'dark' : 'light');
                 if (theme === 'dark') {
+                  document.documentElement.classList.remove('light');
                   document.documentElement.classList.add('dark');
                 } else {
                   document.documentElement.classList.remove('dark');
+                  document.documentElement.classList.add('light');
                 }
               } catch (e) {}
             `,

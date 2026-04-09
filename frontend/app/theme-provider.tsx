@@ -13,7 +13,6 @@ const ThemeContext = createContext<ThemeContextType | undefined>(undefined);
 
 export function ThemeProvider({ children }: { children: ReactNode }) {
   const [theme, setTheme] = useState<Theme>('light');
-  const [mounted, setMounted] = useState(false);
 
   // Initialize theme on mount
   useEffect(() => {
@@ -23,20 +22,18 @@ export function ThemeProvider({ children }: { children: ReactNode }) {
     
     setTheme(initialTheme);
     applyTheme(initialTheme);
-    setMounted(true);
   }, []);
 
   // Apply theme to DOM
   const applyTheme = useCallback((newTheme: Theme) => {
     const html = document.documentElement;
-    const body = document.body;
 
     if (newTheme === 'dark') {
+      html.classList.remove('light');
       html.classList.add('dark');
-      body.classList.add('dark');
     } else {
       html.classList.remove('dark');
-      body.classList.remove('dark');
+      html.classList.add('light');
     }
 
     localStorage.setItem('tinkr-theme', newTheme);
@@ -50,10 +47,6 @@ export function ThemeProvider({ children }: { children: ReactNode }) {
       return newTheme;
     });
   }, [applyTheme]);
-
-  if (!mounted) {
-    return <>{children}</>;
-  }
 
   return (
     <ThemeContext.Provider value={{ theme, toggleTheme }}>
