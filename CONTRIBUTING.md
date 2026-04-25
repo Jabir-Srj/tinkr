@@ -137,6 +137,9 @@ npm run dev
      description: 'What this tool does' 
    }
    ```
+   Available categories: `calculator` · `color` · `converter` · `design` · `encoder` · `generator` · `image` · `math` · `pdf` · `reference` · `seo` · `security` · `text` · `typography` · `validator` · `code` · `web`
+
+   > **Layout tip:** On the root content div inside `ToolTemplate`, always pair `max-w-*` with `mx-auto` so the content centers correctly beside the sidebar.
 
 4. **Test locally:**
    - Run `npm run dev`
@@ -271,8 +274,8 @@ Contributors will be recognized in:
 
 ## Technical Stack
 
-- **Framework:** Next.js 16.2.2
-- **Styling:** Tailwind CSS
+- **Framework:** Next.js 16 (App Router + Turbopack)
+- **Styling:** Tailwind CSS + CSS variables (terminal theme)
 - **Language:** TypeScript
 - **Deployment:** Vercel
 - **Libraries:** Minimal (keep it lightweight!)

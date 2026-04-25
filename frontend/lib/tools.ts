@@ -140,6 +140,12 @@ export const tools = [
   { name: 'Regex Tester Advanced', emoji: '🧪', category: 'reference', url: '/tools/web/regex-tester', description: 'Advanced regex testing' },
   { name: 'API Response Formatter', emoji: '📦', category: 'converter', url: '/tools/web/api-formatter', description: 'Format API responses' },
   { name: 'DNS Lookup Simulator', emoji: '🌐', category: 'web', url: '/tools/web/dns-lookup', description: 'Simulate DNS lookups' },
+
+  // ===== NEW TOOLS (4) =====
+  { name: 'JWT Decoder', emoji: '🔑', category: 'web', url: '/tools/web/jwt-decoder', description: 'Decode & inspect JSON Web Tokens' },
+  { name: 'Unix Timestamp', emoji: '⏱️', category: 'converter', url: '/tools/web/unix-timestamp', description: 'Convert Unix timestamps ↔ human dates' },
+  { name: 'Cron Builder', emoji: '⏰', category: 'web', url: '/tools/web/cron-builder', description: 'Visual cron expression builder & explainer' },
+  { name: 'Box Shadow Generator', emoji: '🌑', category: 'design', url: '/tools/design/box-shadow', description: 'Visual CSS box-shadow builder' },
 ];
 
 export const categories = [
@@ -147,6 +153,7 @@ export const categories = [
   { name: 'Calculators', value: 'calculator' },
   { name: 'Colors', value: 'color' },
   { name: 'Converters', value: 'converter' },
+  { name: 'Design', value: 'design' },
   { name: 'Encoders', value: 'encoder' },
   { name: 'Generators', value: 'generator' },
   { name: 'Images', value: 'image' },
@@ -163,6 +170,6 @@ export const categories = [
 ];
 
 export const stats = {
-  total: 109,
-  categories: 17,
+  total: 113,
+  categories: 18,
 };

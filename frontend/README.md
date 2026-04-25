@@ -1,36 +1,108 @@
-This is a [Next.js](https://nextjs.org) project bootstrapped with [`create-next-app`](https://nextjs.org/docs/app/api-reference/cli/create-next-app).
+# Tinkr — Frontend
+
+> Next.js 16 app powering [Tinkr](https://tinkr-01.vercel.app) — a privacy-first collection of 113 browser-based utilities.
+
+## Stack
+
+| Layer | Choice |
+|---|---|
+| Framework | Next.js 16 (App Router + Turbopack) |
+| Language | TypeScript |
+| Styling | Tailwind CSS + CSS variables (terminal theme) |
+| Icons | Lucide React + Emoji |
+| Deployment | Vercel |
 
 ## Getting Started
 
-First, run the development server:
-
 ```bash
+# From repo root
+cd frontend
+npm install
 npm run dev
-# or
-yarn dev
-# or
-pnpm dev
-# or
-bun dev
+# → http://localhost:3000
 ```
 
-Open [http://localhost:3000](http://localhost:3000) with your browser to see the result.
+## Key Files
 
-You can start editing the page by modifying `app/page.tsx`. The page auto-updates as you edit the file.
+```
+frontend/
+├── app/
+│   ├── page.tsx              # Landing page
+│   ├── layout.tsx            # Root layout (theme, font)
+│   ├── globals.css           # Design tokens & global styles
+│   └── tools/
+│       └── [category]/[tool]/page.tsx   # Tool pages
+├── components/
+│   ├── ToolTemplate.tsx      # Premium terminal-style shell (use this for new tools)
+│   ├── ToolSidebar.tsx       # Collapsible sidebar with search & category tree
+│   └── LegacyToolWrapper.tsx # Wrapper for older tool pages
+└── lib/
+    ├── tools.ts              # Single source of truth — all tool metadata
+    └── alltools.ts           # Re-export helper
+```
 
-This project uses [`next/font`](https://nextjs.org/docs/app/building-your-application/optimizing/fonts) to automatically optimize and load [Geist](https://vercel.com/font), a new font family for Vercel.
+## Adding a New Tool
 
-## Learn More
+### 1. Register in `lib/tools.ts`
 
-To learn more about Next.js, take a look at the following resources:
+```ts
+{ name: 'My Tool', emoji: '🔧', category: 'web', url: '/tools/web/my-tool', description: 'Does something useful' }
+```
 
-- [Next.js Documentation](https://nextjs.org/docs) - learn about Next.js features and API.
-- [Learn Next.js](https://nextjs.org/learn) - an interactive Next.js tutorial.
+### 2. Create `app/tools/web/my-tool/page.tsx`
 
-You can check out [the Next.js GitHub repository](https://github.com/vercel/next.js) - your feedback and contributions are welcome!
+```tsx
+'use client';
 
-## Deploy on Vercel
+import { useState } from 'react';
+import ToolTemplate from '@/components/ToolTemplate';
 
-The easiest way to deploy your Next.js app is to use the [Vercel Platform](https://vercel.com/new?utm_medium=default-template&filter=next.js&utm_source=create-next-app&utm_campaign=create-next-app-readme) from the creators of Next.js.
+export default function MyTool() {
+  const [value, setValue] = useState('');
 
-Check out our [Next.js deployment documentation](https://nextjs.org/docs/app/building-your-application/deploying) for more details.
+  return (
+    <ToolTemplate
+      title="My Tool"
+      description="Does something useful"
+      icon="🔧"
+      onReset={() => setValue('')}
+    >
+      <div className="space-y-4 max-w-3xl mx-auto">
+        {/* your UI here */}
+      </div>
+    </ToolTemplate>
+  );
+}
+```
+
+> **Important:** Always add `mx-auto` alongside `max-w-*` on the root content div so it centers in the available area beside the sidebar.
+
+### 3. That's it — the tool appears in the sidebar automatically.
+
+## Design System
+
+The app uses a terminal-inspired theme defined via CSS variables in `globals.css`:
+
+| Variable | Purpose |
+|---|---|
+| `--background` | Page background |
+| `--secondary-bg` | Card / panel background |
+| `--foreground` | Primary text |
+| `--muted-foreground` | Secondary / dimmed text |
+| `--accent` | Amber highlight color |
+| `--border` | Border color |
+
+Dark and light modes are toggled by adding `.dark` / `.light` to `<html>`.
+
+## Commands
+
+```bash
+npm run dev        # Dev server with hot reload
+npm run build      # Production build
+npm run lint       # ESLint
+npx tsc --noEmit   # Type-check without building
+```
+
+## Tool Categories (18)
+
+`calculator` · `color` · `converter` · `design` · `encoder` · `generator` · `image` · `math` · `pdf` · `reference` · `seo` · `security` · `text` · `typography` · `validator` · `code` · `web`

@@ -13,7 +13,7 @@ A curated collection of small, useful web tools that work entirely in your brows
 - ✅ **Mobile friendly** - Works on all devices
 - ✅ **Beautiful UI** - Clean, minimal design with Tailwind CSS
 
-## 🛠️ Tools (109 - All Functional)
+## 🛠️ Tools (113 - All Functional)
 
 ### Calculators (18 tools)
 - Age Calculator, BMI Calculator, Loan Calculator, Mortgage Calculator
@@ -41,17 +41,23 @@ A curated collection of small, useful web tools that work entirely in your brows
 ### Validators (6 tools)
 - Email Validator, URL Validator, JSON Validator, UUID Validator, IP Validator, Regex Patterns
 
-### Web & Development (9 tools)
+### Web & Development (12 tools)
 - URL Parser, HTTP Status Codes, Regex Tester Advanced
 - API Response Formatter, DNS Lookup Simulator
 - Regex Tester, CSS Minifier, HTML Minifier
 - Tailwind CSS Cheat Sheet
+- **JWT Decoder** — decode & inspect JSON Web Tokens
+- **Unix Timestamp Converter** — Unix timestamp ↔ human date (live clock)
+- **Cron Expression Builder** — visual cron builder with human-readable output
 
-### Images & Design (8 tools)
+### Images (12 tools)
 - QR Code Generator, Barcode Generator, Avatar Generator
 - Placeholder Generator, SVG to PNG, SVG Editor
 - Image Metadata Viewer, Image Compressor, Image Resizer
 - Image Format Converter, Image to Base64, Image Noise Reducer
+
+### Design (1 tool)
+- **CSS Box Shadow Generator** — multi-layer visual box-shadow builder with live preview
 
 ### PDF Tools (5 tools)
 - PDF Generator, PDF Merger, PDF Splitter
@@ -292,12 +298,16 @@ For detailed instructions, see [CONTRIBUTING.md](CONTRIBUTING.md)
 - Regex tester & patterns library
 - HTTP status codes reference
 - Tailwind CSS quick reference
+- JWT Decoder (header, payload, expiry inspection)
+- Unix Timestamp Converter (bidirectional, live clock)
+- Cron Expression Builder (visual + raw, 8 presets)
 
 ### Design & Media
 - Color tools (converter, contrast, blindness simulator)
 - Image processing (compression, resizing, format conversion)
 - PDF tools (generate, merge, split, extract text)
 - Font previewer
+- CSS Box Shadow Generator (multi-layer visual builder)
 
 ---
 
@@ -355,8 +365,8 @@ Built with:
 
 ## 📊 Project Stats
 
-- **Tools:** 109 fully functional utilities
-- **Categories:** 17 well-organized categories
+- **Tools:** 113 fully functional utilities
+- **Categories:** 18 well-organized categories
 - **Bundle Size:** Optimized and minimal
 - **Performance:** Sub-50ms response times
 - **Accessibility:** WCAG compliant
@@ -366,4 +376,4 @@ Built with:
 
 **Made with ❤️ in respect for your privacy and time** 🚀
 
-Latest version: 109 tools, 17 categories, production-ready with dark mode, mobile-responsive design, and full offline support.
+Latest version: 113 tools, 18 categories, production-ready with dark mode, mobile-responsive design, and full offline support.
