@@ -55,7 +55,7 @@ export function ToolSidebar() {
     setExpandedCategories(next);
   };
 
-  const SidebarContent = () => (
+  const sidebarContent = (
     <>
       {/* Header */}
       <div className="flex-shrink-0 border-b border-border">
@@ -171,7 +171,8 @@ export function ToolSidebar() {
       {isToolsPage && (
         <button
           onClick={() => setIsOpen(!isOpen)}
-          className="fixed bottom-4 right-4 z-[60] px-3 py-2 border border-accent text-accent text-xs lg:hidden bg-background"
+          className="fixed bottom-4 right-4 z-[60] px-3 py-2 border text-xs lg:hidden shadow-lg"
+          style={{ backgroundColor: 'var(--secondary-bg)', color: 'var(--accent)', borderColor: 'var(--accent)' }}
           aria-label="Toggle menu"
         >
           {isOpen ? '[close]' : '[menu]'}
@@ -179,18 +180,18 @@ export function ToolSidebar() {
       )}
 
       {/* Desktop sidebar */}
-      <aside className="fixed left-0 top-0 h-screen w-56 border-r border-border bg-background z-40 flex flex-col hidden lg:flex overflow-hidden">
-        <SidebarContent />
+      <aside className="fixed left-0 top-0 h-screen w-56 border-r border-border z-40 flex flex-col hidden lg:flex overflow-hidden" style={{ backgroundColor: 'var(--background)' }}>
+        {sidebarContent}
       </aside>
 
       {/* Mobile sidebar */}
       {isOpen && isToolsPage && (
         <>
-          <aside className="fixed left-0 top-0 h-screen w-56 border-r border-border bg-background z-40 flex flex-col lg:hidden overflow-hidden">
-            <SidebarContent />
+          <aside className="fixed left-0 top-0 h-screen w-56 border-r border-border z-50 flex flex-col lg:hidden overflow-hidden" style={{ backgroundColor: 'var(--background)' }}>
+            {sidebarContent}
           </aside>
           <div
-            className="fixed inset-0 bg-black/50 z-30 lg:hidden"
+            className="fixed inset-0 bg-black/50 z-40 lg:hidden"
             onClick={() => setIsOpen(false)}
           />
         </>

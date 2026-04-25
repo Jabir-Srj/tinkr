@@ -176,7 +176,7 @@ export default function Home() {
           </div>
 
           {/* Terminal body */}
-          <div className="px-6 py-5 space-y-1 text-sm" style={{ backgroundColor: 'var(--background)' }}>
+          <div className="px-4 sm:px-6 py-4 sm:py-5 space-y-1 text-sm" style={{ backgroundColor: 'var(--background)' }}>
             {/* Welcome */}
             <div style={{ color: 'var(--muted-foreground)', fontStyle: 'italic' }}>
               # tinkr v2.0 — fast, minimal developer tools
@@ -218,7 +218,7 @@ export default function Home() {
               <span style={{ color: 'var(--accent)' }}>❯ </span>
               <span style={{ color: 'var(--foreground)' }}>tinkr --help</span>
             </div>
-            <div className="pl-4 grid grid-cols-2 gap-x-8 gap-y-0.5 text-xs" style={{ color: 'var(--muted-foreground)' }}>
+            <div className="pl-4 grid grid-cols-1 sm:grid-cols-2 gap-x-8 gap-y-1 text-xs" style={{ color: 'var(--muted-foreground)' }}>
               {[
                 ['/tools', 'browse all tools'],
                 ['/about', 'about this project'],
