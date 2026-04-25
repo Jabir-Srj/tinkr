@@ -85,8 +85,25 @@ export default function Home() {
   const [category, setCategory] = useState('all');
   const [filtered, setFiltered] = useState(tools);
   const [mounted, setMounted] = useState(false);
-  const [heroStep, setHeroStep] = useState(0);
+  const [terminalInput, setTerminalInput] = useState('');
   const searchRef = useRef<HTMLInputElement>(null);
+
+  const handleTerminalSubmit = (e: React.FormEvent) => {
+    e.preventDefault();
+    const cmd = terminalInput.trim().toLowerCase();
+    
+    if (cmd === '/tools' || cmd === 'tinkr --list' || cmd === 'browse_tools()') {
+      document.getElementById('tools')?.scrollIntoView({ behavior: 'smooth' });
+    } else if (cmd === '/about') {
+      document.getElementById('about')?.scrollIntoView({ behavior: 'smooth' });
+    } else if (cmd === '/github') {
+      window.open('https://github.com/Jabir-Srj/tinkr', '_blank');
+    } else if (cmd === '/search') {
+      searchRef.current?.focus();
+      document.getElementById('tools')?.scrollIntoView({ behavior: 'smooth' });
+    }
+    setTerminalInput('');
+  };
 
   useEffect(() => setMounted(true), []);
 
@@ -234,15 +251,19 @@ export default function Home() {
 
             {/* Input line */}
             <div className="pt-3 border-t border-dashed mt-2 flex items-center gap-2" style={{ borderColor: 'var(--border)' }}>
-              <span className="font-bold" style={{ color: 'var(--accent)' }}>❯</span>
-              <a
-                href="#tools"
-                className="hover:no-underline"
-                style={{ color: 'var(--foreground)' }}
-              >
-                browse_tools()
-              </a>
-              <span className="cursor-blink" />
+              <span className="font-bold shrink-0" style={{ color: 'var(--accent)' }}>❯</span>
+              <form onSubmit={handleTerminalSubmit} className="flex-1 flex items-center">
+                <input
+                  type="text"
+                  value={terminalInput}
+                  onChange={e => setTerminalInput(e.target.value)}
+                  placeholder='try "/tools" or "/about"'
+                  className="bg-transparent border-none p-0 w-full focus:outline-none focus:ring-0"
+                  style={{ color: 'var(--foreground)', boxShadow: 'none' }}
+                  autoComplete="off"
+                  spellCheck="false"
+                />
+              </form>
               <span className="ml-auto flex gap-3 text-xs" style={{ color: 'var(--muted-foreground)' }}>
                 <a href="#tools" className="hover:no-underline" style={{ color: 'var(--muted-foreground)' }}
                   onMouseEnter={e => (e.currentTarget.style.color = 'var(--accent)')}
