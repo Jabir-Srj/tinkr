@@ -1,99 +1,119 @@
 @import "tailwindcss";
 
-/* Claude Theme Colors (from shadcn.io)
-   Light: oklch(0.97 0.02 70) = #f9f7f5 (cream)
-          oklch(0.70 0.14 45) = #d17a5e (warm terracotta)
-   Dark: oklch(0.20 0.05 45) = #1a1410 (very dark brown)
-         oklch(0.75 0.15 30) = #d99166 (warm orange)
-*/
+/* ═══════════════════════════════════════════════════════════════
+   TINKR — TERMINAL THEME
+   Inspired by premium terminal aesthetics (vladburca.com).
+   Deep blue-dark background, warm amber accent, monospace.
+═══════════════════════════════════════════════════════════════ */
 
 :root {
-  /* Light Mode */
-  --background: #f9f7f5;
-  --foreground: #1a1a1a;
-  --accent: #d17a5e;
-  --border: #e8dcc8;
-  --secondary-bg: #fdf9f6;
-  --muted: #9b8e80;
-  --muted-foreground: #706660;
+  /* Light terminal — paper/printout aesthetic */
+  --background:       #f4f4f0;
+  --foreground:       #1a1d2e;
+  --accent:           #c06835;
+  --accent-dim:       rgba(192, 104, 53, 0.15);
+  --border:           #c0c2d0;
+  --secondary-bg:     #e8e9f0;
+  --muted:            #9095b0;
+  --muted-foreground: #5a5f7a;
+  --cursor-color:     #c06835;
+  --window-bg:        #f4f4f0;
+  --window-border:    #c0c2d0;
 }
 
 @media (prefers-color-scheme: dark) {
   :root {
-    /* Dark Mode - maintains warmth */
-    --background: #1a1410;
-    --foreground: #f5f1ed;
-    --accent: #d99166;
-    --border: #3d302a;
-    --secondary-bg: #2a211d;
-    --muted: #8b7355;
-    --muted-foreground: #c4a896;
+    --background:       #1a1d2e;
+    --foreground:       #c9d1d9;
+    --accent:           #d4956a;
+    --accent-dim:       rgba(212, 149, 106, 0.12);
+    --border:           #2e3150;
+    --secondary-bg:     #22253a;
+    --muted:            #4a4f6a;
+    --muted-foreground: #8892b0;
+    --cursor-color:     #d4956a;
+    --window-bg:        #1a1d2e;
+    --window-border:    #2e3150;
   }
 }
 
 .light {
-  --background: #f9f7f5;
-  --foreground: #1a1a1a;
-  --accent: #d17a5e;
-  --border: #e8dcc8;
-  --secondary-bg: #fdf9f6;
-  --muted: #9b8e80;
-  --muted-foreground: #706660;
+  --background:       #f4f4f0;
+  --foreground:       #1a1d2e;
+  --accent:           #c06835;
+  --accent-dim:       rgba(192, 104, 53, 0.15);
+  --border:           #c0c2d0;
+  --secondary-bg:     #e8e9f0;
+  --muted:            #9095b0;
+  --muted-foreground: #5a5f7a;
+  --cursor-color:     #c06835;
+  --window-bg:        #f4f4f0;
+  --window-border:    #c0c2d0;
 }
 
 .dark {
-  --background: #1a1410;
-  --foreground: #f5f1ed;
-  --accent: #d99166;
-  --border: #3d302a;
-  --secondary-bg: #2a211d;
-  --muted: #8b7355;
-  --muted-foreground: #c4a896;
+  --background:       #1a1d2e;
+  --foreground:       #c9d1d9;
+  --accent:           #d4956a;
+  --accent-dim:       rgba(212, 149, 106, 0.12);
+  --border:           #2e3150;
+  --secondary-bg:     #22253a;
+  --muted:            #4a4f6a;
+  --muted-foreground: #8892b0;
+  --cursor-color:     #d4956a;
+  --window-bg:        #1a1d2e;
+  --window-border:    #2e3150;
 }
 
 html.dark {
-  --background: #1a1410;
-  --foreground: #f5f1ed;
-  --accent: #d99166;
-  --border: #3d302a;
-  --secondary-bg: #2a211d;
-  --muted: #8b7355;
-  --muted-foreground: #c4a896;
+  --background:       #1a1d2e;
+  --foreground:       #c9d1d9;
+  --accent:           #d4956a;
+  --accent-dim:       rgba(212, 149, 106, 0.12);
+  --border:           #2e3150;
+  --secondary-bg:     #22253a;
+  --muted:            #4a4f6a;
+  --muted-foreground: #8892b0;
+  --cursor-color:     #d4956a;
+  --window-bg:        #1a1d2e;
+  --window-border:    #2e3150;
 }
 
+/* ═══════════════════════════════════════════════════════════════
+   BASE STYLES
+═══════════════════════════════════════════════════════════════ */
+
 @layer base {
+  /* Terminal-style: zero border radius everywhere */
   * {
-    @apply transition-colors duration-300 ease-in-out;
+    border-radius: 0 !important;
+    box-sizing: border-box;
   }
 
   html, body {
     background-color: var(--background);
     color: var(--foreground);
-    font-family: -apple-system, BlinkMacSystemFont, 'Segoe UI', 'Roboto', sans-serif;
+    font-family: var(--font-mono), 'JetBrains Mono', 'Fira Code', 'Consolas', monospace;
+    font-size: 13.5px;
+    line-height: 1.65;
     margin: 0;
     padding: 0;
-    line-height: 1.6;
   }
 
-  body {
-    min-height: 100vh;
-  }
+  body { min-height: 100vh; }
 
-  /* Text elements */
-  p {
-    color: var(--foreground);
+  ::selection {
+    background-color: var(--accent-dim);
+    color: var(--accent);
   }
 
   a {
     color: var(--accent);
     text-decoration: none;
   }
+  a:hover { text-decoration: underline; }
 
-  a:hover {
-    opacity: 0.8;
-  }
-
-  /* Form elements — themed via CSS variables so all modes are handled */
+  /* Form elements */
   input[type="text"],
   input[type="number"],
   input[type="email"],
@@ -105,132 +125,153 @@ html.dark {
     background-color: var(--secondary-bg);
     color: var(--foreground);
     border: 1px solid var(--border);
-    border-radius: 0.5rem;
-    padding: 0.5rem 0.75rem;
+    padding: 0.4rem 0.65rem;
     font-family: inherit;
-    font-size: 1rem;
-    transition: all 0.2s;
-  }
-
-  input[type="text"]:focus,
-  input[type="number"]:focus,
-  input[type="email"]:focus,
-  input[type="password"]:focus,
-  input[type="search"]:focus,
-  input[type="url"]:focus,
-  textarea:focus,
-  select:focus {
+    font-size: inherit;
     outline: none;
+    transition: border-color 0.15s;
+    width: 100%;
+  }
+
+  input:focus, textarea:focus, select:focus {
     border-color: var(--accent);
-    box-shadow: 0 0 0 2px color-mix(in srgb, var(--accent) 20%, transparent);
+    box-shadow: 0 0 0 1px var(--accent);
   }
 
-  input[type="text"]::placeholder,
-  input[type="number"]::placeholder,
-  input[type="email"]::placeholder,
-  input[type="password"]::placeholder,
-  input[type="search"]::placeholder,
-  input[type="url"]::placeholder,
-  textarea::placeholder {
-    color: var(--muted-foreground);
-    opacity: 0.6;
+  input::placeholder, textarea::placeholder {
+    color: var(--muted);
+    font-style: italic;
   }
 
-  /* Buttons — kept in @layer base so utility classes can override */
+  /* Buttons */
   button {
     background-color: transparent;
-    color: inherit;
-    border: 0;
-    cursor: pointer;
-    transition: color 0.2s, background-color 0.2s, opacity 0.2s, transform 0.2s;
-  }
-
-  button:not([class]) {
-    background-color: var(--accent);
-    color: white;
-    border: none;
-    padding: 0.5rem 1rem;
-    border-radius: 0.5rem;
+    color: var(--foreground);
+    border: 1px solid var(--border);
+    padding: 0.35rem 0.8rem;
     font-family: inherit;
-    font-size: 1rem;
+    font-size: inherit;
+    cursor: pointer;
+    transition: border-color 0.15s, color 0.15s, background-color 0.15s;
   }
 
-  button:not([class]):hover {
-    opacity: 0.9;
-    transform: translateY(-1px);
+  button:hover {
+    border-color: var(--accent);
+    color: var(--accent);
   }
 
-  button:not([class]):active {
-    transform: translateY(0);
-  }
+  button:disabled { opacity: 0.4; cursor: not-allowed; }
 
-  button:disabled {
-    opacity: 0.5;
-    cursor: not-allowed;
-  }
-
-  /* Range inputs */
   input[type="range"] {
     width: 100%;
     cursor: pointer;
+    accent-color: var(--accent);
   }
+
+  code, pre {
+    font-family: inherit;
+    background-color: var(--secondary-bg);
+    color: var(--foreground);
+    border: 1px solid var(--border);
+    padding: 0.1rem 0.3rem;
+  }
+
+  pre { padding: 1rem; overflow-x: auto; }
 }
 
-/* Scrollbar styling */
-::-webkit-scrollbar {
-  width: 8px;
-  height: 8px;
+/* ═══════════════════════════════════════════════════════════════
+   SCROLLBAR
+═══════════════════════════════════════════════════════════════ */
+
+::-webkit-scrollbar { width: 6px; height: 6px; }
+::-webkit-scrollbar-track { background: var(--background); }
+::-webkit-scrollbar-thumb { background: var(--border); }
+::-webkit-scrollbar-thumb:hover { background: var(--muted); }
+
+/* ═══════════════════════════════════════════════════════════════
+   BLINKING CURSOR ANIMATION
+═══════════════════════════════════════════════════════════════ */
+
+@keyframes blink {
+  0%, 50% { opacity: 1; }
+  51%, 100% { opacity: 0; }
 }
 
-::-webkit-scrollbar-track {
-  background: var(--secondary-bg);
-}
-
-::-webkit-scrollbar-thumb {
-  background: var(--muted);
-  border-radius: 4px;
-}
-
-::-webkit-scrollbar-thumb:hover {
-  background: var(--accent);
-}
-
-/* Selection colors */
-::selection {
+.cursor-blink {
+  display: inline-block;
+  width: 0.55em;
+  height: 1em;
   background-color: var(--accent);
-  color: white;
+  vertical-align: text-bottom;
+  animation: blink 1.1s step-end infinite;
 }
 
-/* Code blocks */
-code, pre {
+/* ═══════════════════════════════════════════════════════════════
+   macOS TERMINAL WINDOW CHROME
+═══════════════════════════════════════════════════════════════ */
+
+.terminal-window {
+  border: 1px solid var(--window-border);
+  overflow: hidden;
+  box-shadow:
+    0 0 0 1px rgba(0,0,0,0.3),
+    0 24px 64px rgba(0,0,0,0.4),
+    0 8px 24px rgba(0,0,0,0.3);
+}
+
+.dark .terminal-window {
+  box-shadow:
+    0 0 0 1px rgba(0,0,0,0.5),
+    0 24px 80px rgba(0,0,0,0.6),
+    0 8px 32px rgba(0,0,0,0.4);
+}
+
+.terminal-titlebar {
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  position: relative;
   background-color: var(--secondary-bg);
-  color: var(--foreground);
-  border-radius: 0.25rem;
-  padding: 0.125rem 0.25rem;
-  font-family: 'Courier New', monospace;
+  border-bottom: 1px solid var(--window-border);
+  padding: 0.5rem 1rem;
+  height: 36px;
 }
 
-pre {
-  padding: 1rem;
-  overflow-x: auto;
+.terminal-traffic-lights {
+  position: absolute;
+  left: 0.75rem;
+  display: flex;
+  align-items: center;
+  gap: 6px;
 }
 
-/* ============================================================
-   Theme-aware overrides for hardcoded Tailwind color classes
-   used across tool pages. CSS variables change per mode so
-   these single rules handle both light and dark correctly.
-   ============================================================ */
-
-/* Backgrounds */
-.bg-white:not([style*="background"]) {
-  background-color: var(--secondary-bg) !important;
+.tl-dot {
+  width: 12px;
+  height: 12px;
+  border-radius: 50% !important;
+  display: block;
 }
-.bg-gray-50 { background-color: var(--secondary-bg) !important; }
+
+.tl-red    { background-color: #ff5f57; }
+.tl-yellow { background-color: #ffbd2e; }
+.tl-green  { background-color: #28ca42; }
+
+.terminal-title {
+  font-size: 12px;
+  color: var(--muted-foreground);
+  letter-spacing: 0.02em;
+}
+
+/* ═══════════════════════════════════════════════════════════════
+   THEME-AWARE OVERRIDES (hardcoded Tailwind → theme tokens)
+═══════════════════════════════════════════════════════════════ */
+
+.bg-white:not([style*="background"]) { background-color: var(--secondary-bg) !important; }
+.bg-gray-50  { background-color: var(--secondary-bg) !important; }
 .bg-gray-100 { background-color: var(--secondary-bg) !important; }
 .bg-gray-200 { background-color: var(--border) !important; }
 .bg-gray-300 { background-color: var(--border) !important; }
 
-/* Text */
 .text-gray-900 { color: var(--foreground) !important; }
 .text-gray-800 { color: var(--foreground) !important; }
 .text-gray-700 { color: var(--foreground) !important; }
@@ -238,15 +279,13 @@ pre {
 .text-gray-500 { color: var(--muted-foreground) !important; }
 .text-gray-400 { color: var(--muted) !important; }
 
-/* Borders */
 .border-gray-200 { border-color: var(--border) !important; }
 .border-gray-300 { border-color: var(--border) !important; }
 .border-gray-400 { border-color: var(--border) !important; }
 
-/* Dark mode slate overrides — map slate palette to warm theme palette */
 .dark .dark\:bg-slate-800,
 .dark .dark\:bg-slate-700 { background-color: var(--secondary-bg) !important; }
-.dark .dark\:bg-slate-900 { background-color: var(--background) !important; }
+.dark .dark\:bg-slate-900  { background-color: var(--background) !important; }
 .dark .dark\:text-gray-100,
 .dark .dark\:text-slate-100 { color: var(--foreground) !important; }
 .dark .dark\:text-gray-400,
@@ -254,6 +293,27 @@ pre {
 .dark .dark\:border-slate-600,
 .dark .dark\:border-slate-700 { border-color: var(--border) !important; }
 
-/* Focus rings — replace blue with accent */
-.focus\:ring-blue-500:focus { --tw-ring-color: var(--accent) !important; }
-.focus\:ring-blue-300:focus { --tw-ring-color: color-mix(in srgb, var(--accent) 50%, transparent) !important; }
+/* ═══════════════════════════════════════════════════════════════
+   ACCENT CONSISTENCY — remap cold blue → warm amber
+═══════════════════════════════════════════════════════════════ */
+
+.text-blue-600, .text-blue-500 { color: var(--accent) !important; }
+.text-blue-700 { color: var(--accent) !important; }
+.text-indigo-600, .text-indigo-500 { color: var(--accent) !important; }
+
+.bg-blue-600  { background-color: var(--accent) !important; color: var(--background) !important; }
+.bg-blue-500  { background-color: var(--accent) !important; color: var(--background) !important; }
+.bg-blue-100  { background-color: var(--accent-dim) !important; }
+.bg-blue-50   { background-color: var(--accent-dim) !important; }
+.bg-indigo-600 { background-color: var(--accent) !important; color: var(--background) !important; }
+
+.hover\:bg-blue-700:hover { background-color: var(--accent) !important; color: var(--background) !important; }
+.hover\:bg-blue-600:hover { background-color: var(--accent) !important; color: var(--background) !important; }
+
+.border-blue-500 { border-color: var(--accent) !important; }
+.border-blue-300 { border-color: var(--accent) !important; }
+.border-blue-200 { border-color: var(--border) !important; }
+
+.focus\:ring-blue-500:focus,
+.focus\:ring-blue-300:focus { --tw-ring-color: var(--accent) !important; }
+.ring-blue-500 { --tw-ring-color: var(--accent) !important; }

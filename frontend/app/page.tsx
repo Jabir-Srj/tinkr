@@ -1,302 +1,426 @@
 'use client';
 
-import { useState, useEffect } from 'react';
-import Link from 'next/link';
-import { motion } from 'framer-motion';
-import { Search, ChevronRight, Zap, Lock, Sun, Moon } from 'lucide-react';
+import { useState, useEffect, useRef } from 'react';
+import { motion, AnimatePresence } from 'framer-motion';
 import { useTheme } from '@/app/theme-provider';
 import { tools, categories, stats } from '@/lib/tools';
 
-const fadeIn = {
-  hidden: { opacity: 0 },
-  visible: { opacity: 1, transition: { duration: 0.6 } },
-};
+/* ── Animated counter ─────────────────────────────────────── */
+function Counter({ to }: { to: number }) {
+  const [count, setCount] = useState(0);
+  const ref = useRef<HTMLSpanElement>(null);
+  const started = useRef(false);
+  useEffect(() => {
+    const el = ref.current;
+    if (!el || started.current) return;
+    const obs = new IntersectionObserver(([e]) => {
+      if (!e.isIntersecting) return;
+      started.current = true;
+      obs.disconnect();
+      const dur = 1000;
+      const t0 = performance.now();
+      const tick = (now: number) => {
+        const p = Math.min((now - t0) / dur, 1);
+        setCount(Math.round((1 - Math.pow(2, -8 * p)) * to));
+        if (p < 1) requestAnimationFrame(tick);
+      };
+      requestAnimationFrame(tick);
+    });
+    obs.observe(el);
+    return () => obs.disconnect();
+  }, [to]);
+  return <span ref={ref}>{count}</span>;
+}
 
-const slideUp = {
-  hidden: { opacity: 0, y: 20 },
-  visible: { opacity: 1, y: 0, transition: { duration: 0.5 } },
-};
-
-function ThemeToggleButton() {
+/* ── Theme toggle ─────────────────────────────────────────── */
+function ThemeToggle() {
   const { theme, toggleTheme } = useTheme();
   const [mounted, setMounted] = useState(false);
-
-  useEffect(() => {
-    setMounted(true);
-  }, []);
-
-  if (!mounted) return null;
-
+  useEffect(() => setMounted(true), []);
+  if (!mounted) return <span className="opacity-0 text-xs">-----</span>;
   return (
     <button
       onClick={toggleTheme}
-      className="p-2 rounded-lg bg-secondary-bg hover:bg-border text-foreground transition-all duration-300"
-      title={theme === 'dark' ? 'Switch to light mode' : 'Switch to dark mode'}
+      className="text-xs px-2 py-0.5 border border-border text-muted-foreground hover:text-accent hover:border-accent transition-colors"
       aria-label="Toggle theme"
     >
-      {theme === 'dark' ? <Sun size={20} /> : <Moon size={20} />}
+      [{theme === 'dark' ? 'light' : 'dark'}]
     </button>
   );
 }
 
+/* ── Typewriter line ──────────────────────────────────────── */
+function TypeLine({ text, delay = 0, onDone }: { text: string; delay?: number; onDone?: () => void }) {
+  const [displayed, setDisplayed] = useState('');
+  const [done, setDone] = useState(false);
+
+  useEffect(() => {
+    const timer = setTimeout(() => {
+      let i = 0;
+      const interval = setInterval(() => {
+        setDisplayed(text.slice(0, i + 1));
+        i++;
+        if (i >= text.length) {
+          clearInterval(interval);
+          setDone(true);
+          onDone?.();
+        }
+      }, 28);
+      return () => clearInterval(interval);
+    }, delay);
+    return () => clearTimeout(timer);
+  }, [text, delay, onDone]);
+
+  return (
+    <span>
+      {displayed}
+      {!done && <span className="cursor-blink" />}
+    </span>
+  );
+}
+
+/* ── Page ─────────────────────────────────────────────────── */
 export default function Home() {
-  const [searchQuery, setSearchQuery] = useState('');
-  const [selectedCategory, setSelectedCategory] = useState('all');
-  const [filteredTools, setFilteredTools] = useState(tools);
+  const [query, setQuery] = useState('');
+  const [category, setCategory] = useState('all');
+  const [filtered, setFiltered] = useState(tools);
   const [mounted, setMounted] = useState(false);
+  const [heroStep, setHeroStep] = useState(0);
+  const searchRef = useRef<HTMLInputElement>(null);
+
+  useEffect(() => setMounted(true), []);
 
   useEffect(() => {
-    setMounted(true);
+    let result = tools;
+    if (category !== 'all') result = result.filter(t => t.category === category);
+    if (query) result = result.filter(t =>
+      t.name.toLowerCase().includes(query.toLowerCase()) ||
+      t.description.toLowerCase().includes(query.toLowerCase())
+    );
+    setFiltered(result);
+  }, [query, category]);
+
+  useEffect(() => {
+    const handler = (e: KeyboardEvent) => {
+      if (e.key === '/' && document.activeElement?.tagName !== 'INPUT') {
+        e.preventDefault();
+        searchRef.current?.focus();
+        document.getElementById('tools')?.scrollIntoView({ behavior: 'smooth' });
+      }
+    };
+    window.addEventListener('keydown', handler);
+    return () => window.removeEventListener('keydown', handler);
   }, []);
-
-  useEffect(() => {
-    let filtered = tools;
-
-    if (selectedCategory !== 'all') {
-      filtered = filtered.filter((t) => t.category === selectedCategory);
-    }
-
-    if (searchQuery) {
-      filtered = filtered.filter(
-        (t) =>
-          t.name.toLowerCase().includes(searchQuery.toLowerCase()) ||
-          t.description.toLowerCase().includes(searchQuery.toLowerCase())
-      );
-    }
-
-    setFilteredTools(filtered);
-  }, [searchQuery, selectedCategory]);
 
   if (!mounted) return null;
 
+  const activeCat = categories.find(c => c.value === category);
+
   return (
-    <div className="min-h-screen bg-background text-foreground transition-colors duration-300" suppressHydrationWarning>
-      {/* Header */}
-      <motion.header
-        initial="hidden"
-        animate="visible"
-        variants={fadeIn}
-        className="sticky top-0 z-50 border-b border-border bg-background/95 backdrop-blur-sm transition-colors duration-300"
-      >
-        <div className="max-w-7xl mx-auto px-6 py-4 flex items-center justify-between">
-          <Link href="/" className="flex items-center gap-2 group">
-            <div className="w-8 h-8 bg-accent rounded flex items-center justify-center">
-              <span className="text-white font-bold text-lg">⚡</span>
-            </div>
-            <div className="text-xl font-bold text-foreground">tinkr</div>
-          </Link>
+    <div
+      className="min-h-screen"
+      style={{
+        background: 'var(--background)',
+        backgroundImage: 'radial-gradient(ellipse at 30% 20%, color-mix(in srgb, var(--accent) 5%, transparent) 0%, transparent 60%), radial-gradient(ellipse at 70% 80%, color-mix(in srgb, var(--accent) 3%, transparent) 0%, transparent 50%)',
+      }}
+    >
+      {/* ── Topbar ──────────────────────────────────────── */}
+      <header className="sticky top-0 z-50 border-b border-border" style={{ backgroundColor: 'var(--secondary-bg)' }}>
+        <div className="max-w-7xl mx-auto px-5 py-2 flex items-center justify-between gap-4">
+          <a href="/" className="flex items-center gap-2 text-sm font-bold hover:no-underline" style={{ color: 'var(--accent)' }}>
+            <span style={{ color: 'var(--muted-foreground)' }}>~</span>
+            <span>jabir@tinkr</span>
+            <span style={{ color: 'var(--muted-foreground)' }} className="font-normal">/tools</span>
+          </a>
 
-          <div className="flex items-center gap-6">
-            <nav className="hidden md:flex gap-8 text-sm">
-              <a href="#about" className="text-muted-foreground hover:text-accent transition font-medium">
-                About
+          <nav className="hidden md:flex items-center text-xs" style={{ color: 'var(--muted-foreground)' }}>
+            {[
+              { label: '/about', href: '#about' },
+              { label: '/tools', href: '#tools' },
+              { label: '/github', href: 'https://github.com/Jabir-Srj/tinkr' },
+            ].map(({ label, href }) => (
+              <a
+                key={label}
+                href={href}
+                className="px-3 py-1 transition-colors border-r border-border first:border-l hover:no-underline"
+                style={{ color: 'var(--muted-foreground)' }}
+                onMouseEnter={e => (e.currentTarget.style.color = 'var(--accent)')}
+                onMouseLeave={e => (e.currentTarget.style.color = 'var(--muted-foreground)')}
+              >
+                {label}
               </a>
-              <a href="#tools" className="text-muted-foreground hover:text-accent transition font-medium">
-                Tools
-              </a>
-              <a href="https://github.com/Jabir-Srj/tinkr" className="text-muted-foreground hover:text-accent transition font-medium">
-                GitHub
-              </a>
-            </nav>
-            
-            <ThemeToggleButton />
+            ))}
+          </nav>
+
+          <ThemeToggle />
+        </div>
+      </header>
+
+      {/* ── Hero — macOS terminal window ─────────────────── */}
+      <section className="px-4 py-10 md:py-16 flex justify-center">
+        <motion.div
+          initial={{ opacity: 0, y: 20 }}
+          animate={{ opacity: 1, y: 0 }}
+          transition={{ duration: 0.5 }}
+          className="terminal-window w-full max-w-3xl"
+          style={{ borderRadius: '8px !important' }}
+        >
+          {/* Title bar */}
+          <div className="terminal-titlebar">
+            <div className="terminal-traffic-lights">
+              <span className="tl-dot tl-red" />
+              <span className="tl-dot tl-yellow" />
+              <span className="tl-dot tl-green" />
+            </div>
+            <span className="terminal-title">jabir@tinkr ~ /tools</span>
           </div>
-        </div>
-      </motion.header>
 
-      {/* Hero Section */}
-      <section className="relative pt-20 pb-16 px-6 bg-gradient-to-b from-background via-background to-secondary-bg transition-colors duration-300">
-        <div className="max-w-4xl mx-auto">
-          <motion.div
-            initial="hidden"
-            animate="visible"
-            variants={slideUp}
-            className="space-y-8"
-          >
-            <div className="space-y-4">
-              <h1 className="text-6xl md:text-7xl font-bold text-foreground">
-                tinkr
-              </h1>
-              <p className="text-2xl text-foreground leading-relaxed">
-                Fast, minimal tools for developers.
-              </p>
-              <p className="text-muted-foreground text-lg">
-                109 utilities • 100% private • Zero pricing • Client-side only
-              </p>
+          {/* Terminal body */}
+          <div className="px-6 py-5 space-y-1 text-sm" style={{ backgroundColor: 'var(--background)' }}>
+            {/* Welcome */}
+            <div style={{ color: 'var(--muted-foreground)', fontStyle: 'italic' }}>
+              # tinkr v2.0 — fast, minimal developer tools
+            </div>
+            <div style={{ color: 'var(--muted-foreground)', fontStyle: 'italic' }}>
+              # no logins. no tracking. no BS.
+            </div>
+            <div className="pt-1" />
+
+            {/* Commands */}
+            <div>
+              <span style={{ color: 'var(--accent)' }}>❯ </span>
+              <span style={{ color: 'var(--foreground)' }}>tinkr --list | wc -l</span>
+            </div>
+            <div style={{ color: 'var(--foreground)' }} className="pl-4">
+              <Counter to={stats.total} />
+              <span style={{ color: 'var(--muted-foreground)' }}> tools available</span>
             </div>
 
-            {/* Stats */}
-            <div className="grid grid-cols-3 gap-6 pt-8 border-t border-border">
-              <div>
-                <div className="text-4xl font-bold text-accent">{stats.total}</div>
-                <div className="text-sm text-muted-foreground mt-1">tools ready</div>
-              </div>
-              <div>
-                <div className="text-4xl font-bold text-accent">{stats.categories}</div>
-                <div className="text-sm text-muted-foreground mt-1">categories</div>
-              </div>
-              <div>
-                <div className="text-4xl font-bold text-accent">$0</div>
-                <div className="text-sm text-muted-foreground mt-1">forever free</div>
-              </div>
+            <div className="pt-1">
+              <span style={{ color: 'var(--accent)' }}>❯ </span>
+              <span style={{ color: 'var(--foreground)' }}>tinkr --status</span>
+            </div>
+            <div className="pl-4 space-y-0.5">
+              {[
+                ['OK', 'privacy-first — zero data collection, no servers'],
+                ['OK', 'client-side — all processing in your browser'],
+                ['OK', 'cost — $0.00 forever'],
+                ['OK', `tools — ${stats.total} utilities across ${stats.categories} categories`],
+              ].map(([tag, msg]) => (
+                <div key={msg}>
+                  <span style={{ color: 'var(--accent)' }}>[{tag}]</span>
+                  <span style={{ color: 'var(--muted-foreground)' }}> {msg}</span>
+                </div>
+              ))}
             </div>
 
-            {/* Features */}
-            <div className="space-y-3 pt-8 border-t border-border">
-              <div className="flex items-start gap-3 text-muted-foreground">
-                <Lock className="w-5 h-5 text-accent mt-0.5 flex-shrink-0" />
-                <span>No tracking, no logins, no BS. Everything runs in your browser.</span>
-              </div>
-              <div className="flex items-start gap-3 text-muted-foreground">
-                <Zap className="w-5 h-5 text-accent mt-0.5 flex-shrink-0" />
-                <span>Designed for developers who value simplicity and speed.</span>
-              </div>
+            <div className="pt-1">
+              <span style={{ color: 'var(--accent)' }}>❯ </span>
+              <span style={{ color: 'var(--foreground)' }}>tinkr --help</span>
             </div>
-          </motion.div>
-        </div>
+            <div className="pl-4 grid grid-cols-2 gap-x-8 gap-y-0.5 text-xs" style={{ color: 'var(--muted-foreground)' }}>
+              {[
+                ['/tools', 'browse all tools'],
+                ['/about', 'about this project'],
+                ['/search', 'search by keyword (press /)'],
+                ['/github', 'view source code'],
+              ].map(([cmd, desc]) => (
+                <div key={cmd} className="flex gap-2">
+                  <span style={{ color: 'var(--accent)' }}>{cmd}</span>
+                  <span>{desc}</span>
+                </div>
+              ))}
+            </div>
+
+            {/* Input line */}
+            <div className="pt-3 border-t border-dashed mt-2 flex items-center gap-2" style={{ borderColor: 'var(--border)' }}>
+              <span className="font-bold" style={{ color: 'var(--accent)' }}>❯</span>
+              <a
+                href="#tools"
+                className="hover:no-underline"
+                style={{ color: 'var(--foreground)' }}
+              >
+                browse_tools()
+              </a>
+              <span className="cursor-blink" />
+              <span className="ml-auto flex gap-3 text-xs" style={{ color: 'var(--muted-foreground)' }}>
+                <a href="#tools" className="hover:no-underline" style={{ color: 'var(--muted-foreground)' }}
+                  onMouseEnter={e => (e.currentTarget.style.color = 'var(--accent)')}
+                  onMouseLeave={e => (e.currentTarget.style.color = 'var(--muted-foreground)')}
+                >
+                  /tools ↓
+                </a>
+                <a href="https://github.com/Jabir-Srj/tinkr" target="_blank" rel="noopener noreferrer"
+                  className="hover:no-underline"
+                  style={{ color: 'var(--muted-foreground)' }}
+                  onMouseEnter={e => (e.currentTarget.style.color = 'var(--accent)')}
+                  onMouseLeave={e => (e.currentTarget.style.color = 'var(--muted-foreground)')}
+                >
+                  /github ↗
+                </a>
+              </span>
+            </div>
+          </div>
+        </motion.div>
       </section>
 
-      {/* Search & Filter */}
-      <section id="tools" className="relative py-20 px-6 bg-secondary-bg transition-colors duration-300">
-        <div className="max-w-6xl mx-auto">
-          <motion.div
-            initial="hidden"
-            whileInView="visible"
-            viewport={{ once: true }}
-            variants={slideUp}
-            className="space-y-8"
+      {/* ── Tools Section ────────────────────────────────── */}
+      <section id="tools" className="border-t border-border">
+        <div className="max-w-7xl mx-auto px-5 py-8 space-y-5">
+
+          {/* Section header */}
+          <div className="flex items-center gap-3">
+            <span style={{ color: 'var(--accent)' }}>❯</span>
+            <span className="text-sm" style={{ color: 'var(--foreground)' }}>tinkr --list</span>
+            <div className="flex-1 border-t border-dashed ml-2" style={{ borderColor: 'var(--border)' }} />
+          </div>
+
+          {/* Search */}
+          <div
+            className="flex items-center border transition-colors"
+            style={{ borderColor: 'var(--border)' }}
+            onFocusCapture={e => (e.currentTarget.style.borderColor = 'var(--accent)')}
+            onBlurCapture={e => (e.currentTarget.style.borderColor = 'var(--border)')}
           >
-            {/* Title */}
-            <div className="border-l-4 border-accent pl-6">
-              <h2 className="text-4xl font-bold text-foreground">All Tools</h2>
-              <p className="text-muted-foreground text-lg mt-2">Pick what you need</p>
-            </div>
+            <span className="px-3 py-2.5 border-r text-sm font-bold" style={{ borderColor: 'var(--border)', color: 'var(--accent)' }}>❯</span>
+            <input
+              ref={searchRef}
+              id="search-tools"
+              type="search"
+              placeholder="filter tools..."
+              value={query}
+              onChange={e => setQuery(e.target.value)}
+              className="flex-1 bg-transparent px-3 py-2.5 text-sm focus:outline-none"
+              style={{ boxShadow: 'none', border: 'none', color: 'var(--foreground)' }}
+            />
+            <kbd className="hidden sm:block px-3 py-2.5 border-l text-xs italic" style={{ borderColor: 'var(--border)', color: 'var(--muted)' }}>press /</kbd>
+          </div>
 
-            {/* Search Bar */}
-            <div className="flex items-center gap-2 bg-background border border-border rounded-lg px-4 py-3 focus-within:border-accent focus-within:ring-1 focus-within:ring-accent transition">
-              <Search className="w-5 h-5 text-muted-foreground flex-shrink-0" />
-              <input
-                type="text"
-                placeholder="Search tools..."
-                value={searchQuery}
-                onChange={(e) => setSearchQuery(e.target.value)}
-                className="flex-1 bg-background text-foreground placeholder-muted focus:outline-none text-base"
-              />
-            </div>
-
-            {/* Category Filter */}
-            <div className="flex flex-wrap gap-2">
-              {categories.map((cat) => (
+          {/* Category tabs */}
+          <div className="flex flex-wrap gap-0 border-b" style={{ borderColor: 'var(--border)' }}>
+            {categories.map(cat => {
+              const active = category === cat.value;
+              return (
                 <button
                   key={cat.value}
-                  onClick={() => setSelectedCategory(cat.value)}
-                  className={`px-4 py-2 text-sm rounded-lg transition font-medium ${
-                    selectedCategory === cat.value
-                      ? 'border border-accent bg-accent/10 text-accent'
-                      : 'border border-border text-muted-foreground hover:border-accent hover:text-accent'
-                  }`}
+                  onClick={() => setCategory(cat.value)}
+                  className="px-3 py-1.5 text-xs border-r transition-colors last:border-r-0"
+                  style={active
+                    ? { backgroundColor: 'var(--accent)', color: 'var(--background)', borderColor: 'var(--accent)', fontWeight: '600' }
+                    : { backgroundColor: 'transparent', color: 'var(--muted-foreground)', borderColor: 'var(--border)' }
+                  }
                 >
                   {cat.name}
                 </button>
-              ))}
-            </div>
-          </motion.div>
+              );
+            })}
+          </div>
 
-          {/* Tools Grid */}
-          <motion.div
-            initial="hidden"
-            whileInView="visible"
-            viewport={{ once: true }}
-            className="mt-16 grid sm:grid-cols-2 lg:grid-cols-3 gap-4"
+          {/* Count */}
+          <div className="text-xs" style={{ color: 'var(--muted-foreground)' }}>
+            <span style={{ color: 'var(--accent)' }}>❯</span>{' '}
+            found <span style={{ color: 'var(--foreground)' }}>{filtered.length}</span> tools
+            {category !== 'all' && <> in <span style={{ color: 'var(--accent)' }}>{activeCat?.name}</span></>}
+            {query && <> matching <span style={{ color: 'var(--foreground)' }}>"{query}"</span></>}
+          </div>
+
+          {/* Tool grid */}
+          <div
+            className="grid sm:grid-cols-2 lg:grid-cols-3 xl:grid-cols-4 border-t border-l"
+            style={{ borderColor: 'var(--border)' }}
           >
-            {filteredTools.map((tool, i) => (
+            {filtered.map((tool, i) => (
               <motion.a
-                key={i}
+                key={tool.url}
                 href={tool.url}
-                initial={{ opacity: 0, y: 10 }}
-                whileInView={{ opacity: 1, y: 0 }}
-                viewport={{ once: true }}
-                transition={{ delay: i * 0.02 }}
-                whileHover={{ y: -2 }}
-                className="p-6 border border-border rounded-lg bg-background hover:border-accent transition group cursor-pointer"
+                initial={{ opacity: 0 }}
+                whileInView={{ opacity: 1 }}
+                viewport={{ once: true, margin: '-20px' }}
+                transition={{ delay: Math.min(i * 0.015, 0.25), duration: 0.3 }}
+                className="group block p-4 border-b border-r transition-colors cursor-pointer"
+                style={{
+                  borderColor: 'var(--border)',
+                  backgroundColor: 'transparent',
+                }}
+                onMouseEnter={e => (e.currentTarget.style.backgroundColor = 'var(--secondary-bg)')}
+                onMouseLeave={e => (e.currentTarget.style.backgroundColor = 'transparent')}
               >
-                <div className="flex items-start justify-between mb-4">
-                  <div className="text-4xl">{tool.emoji}</div>
-                  <ChevronRight className="w-5 h-5 text-muted group-hover:text-accent group-hover:translate-x-0.5 transition" />
+                <div className="flex items-start justify-between mb-2">
+                  <span className="text-base">{tool.emoji}</span>
+                  <span
+                    className="text-xs opacity-0 group-hover:opacity-100 transition-opacity font-bold"
+                    style={{ color: 'var(--accent)' }}
+                  >→</span>
                 </div>
-                <h3 className="text-base font-semibold text-foreground mb-2 group-hover:text-accent transition">
-                  {tool.name}
-                </h3>
-                <p className="text-sm text-muted-foreground group-hover:text-foreground transition">
+                <div
+                  className="text-xs font-semibold mb-1 transition-colors"
+                  style={{ color: 'var(--foreground)' }}
+                  onMouseEnter={e => ((e.currentTarget.parentElement as HTMLElement).querySelector('.tool-name')?.setAttribute('style', `color:var(--accent)`))}
+                >
+                  <span className="tool-name">{tool.name}</span>
+                </div>
+                <div className="text-xs line-clamp-2" style={{ color: 'var(--muted-foreground)' }}>
                   {tool.description}
-                </p>
+                </div>
               </motion.a>
             ))}
-          </motion.div>
+          </div>
 
-          {filteredTools.length === 0 && (
-            <div className="mt-12 text-center text-muted-foreground">
-              <p>No tools found. Try a different search.</p>
+          {filtered.length === 0 && (
+            <div className="py-10 text-sm border p-5" style={{ borderColor: 'var(--border)', color: 'var(--muted-foreground)' }}>
+              <div><span style={{ color: 'var(--accent)' }}>❯</span> search "{query}"</div>
+              <div className="pl-4 mt-1 italic">no results found — try a different query</div>
             </div>
           )}
         </div>
       </section>
 
-      {/* About Section */}
-      <section id="about" className="relative py-20 px-6 bg-background border-t border-border transition-colors duration-300">
-        <div className="max-w-4xl mx-auto">
-          <motion.div
-            initial="hidden"
-            whileInView="visible"
-            viewport={{ once: true }}
-            variants={slideUp}
-            className="space-y-8"
-          >
-            <div className="border-l-4 border-accent pl-6">
-              <h2 className="text-4xl font-bold text-foreground">About Tinkr</h2>
+      {/* ── About ────────────────────────────────────────── */}
+      <section id="about" className="border-t border-border">
+        <div className="max-w-7xl mx-auto px-5 py-10">
+          <div className="space-y-5 max-w-2xl text-sm">
+            <div className="flex items-center gap-3">
+              <span style={{ color: 'var(--accent)' }}>❯</span>
+              <span style={{ color: 'var(--foreground)' }}>cat README.md</span>
+              <div className="flex-1 border-t border-dashed ml-2" style={{ borderColor: 'var(--border)' }} />
             </div>
 
-            <div className="space-y-6 text-foreground text-base leading-relaxed">
-              <p>
-                Tinkr is a collection of fast, minimal tools designed for developers. No tracking. No logins. No overthinking.
-              </p>
-              <p>
-                Everything runs client-side in your browser. Your data stays yours. All source code is open, and you can fork it, improve it, and make it your own.
-              </p>
-
-              {/* Features Grid */}
-              <div className="grid sm:grid-cols-2 gap-8 pt-8 border-t border-border">
-                <div className="space-y-2">
-                  <div className="flex items-center gap-2 text-accent">
-                    <Lock className="w-5 h-5" />
-                    <span className="font-semibold text-foreground">Privacy First</span>
-                  </div>
-                  <p className="text-sm text-muted-foreground">Zero data collection. No servers. No tracking. Ever.</p>
-                </div>
-                <div className="space-y-2">
-                  <div className="flex items-center gap-2 text-accent">
-                    <Zap className="w-5 h-5" />
-                    <span className="font-semibold text-foreground">Lightning Fast</span>
-                  </div>
-                  <p className="text-sm text-muted-foreground">Instant results. No loading. No delays. Pure speed.</p>
-                </div>
+            <div style={{ color: 'var(--muted-foreground)', fontStyle: 'italic' }}>
+              {/* README content */}
+              <div># About Tinkr</div>
+              <div className="mt-2" style={{ fontStyle: 'normal', color: 'var(--foreground)' }}>
+                A collection of fast, minimal developer tools. No tracking. No logins.
+                No servers. Everything runs in your browser — your data stays yours.
               </div>
             </div>
-          </motion.div>
+
+            <div className="border-l-2 pl-4 space-y-1" style={{ borderColor: 'var(--accent)' }}>
+              {[
+                ['privacy', 'zero data collection. no cookies, no analytics'],
+                ['speed', 'instant results — pure client-side processing'],
+                ['open', 'MIT license — fork it, improve it, share it'],
+                ['free', '$0.00 forever. no pricing tiers'],
+              ].map(([k, v]) => (
+                <div key={k} className="flex gap-2 text-xs">
+                  <span className="shrink-0" style={{ color: 'var(--accent)' }}>{k}:</span>
+                  <span style={{ color: 'var(--muted-foreground)' }}>{v}</span>
+                </div>
+              ))}
+            </div>
+          </div>
         </div>
       </section>
 
-      {/* Footer */}
-      <footer className="relative border-t border-border bg-secondary-bg py-12 px-6 transition-colors duration-300">
-        <div className="max-w-4xl mx-auto">
-          <div className="space-y-4">
-            <p className="text-sm text-muted-foreground">
-              Made by Jabir • MIT License • <a href="https://github.com/Jabir-Srj/tinkr" className="text-accent hover:underline">GitHub</a>
-            </p>
-            <p className="text-xs text-muted">
-              v2.0 | 109 tools | 17 categories | 0% BS
-            </p>
-          </div>
+      {/* ── Footer ───────────────────────────────────────── */}
+      <footer className="border-t border-border" style={{ backgroundColor: 'var(--secondary-bg)' }}>
+        <div className="max-w-7xl mx-auto px-5 py-3 flex flex-col sm:flex-row items-start sm:items-center justify-between gap-2 text-xs" style={{ color: 'var(--muted-foreground)' }}>
+          <span>
+            <span style={{ color: 'var(--accent)' }}>jabir@tinkr</span>
+            {' '}~ /tools — v2.0 — MIT license
+          </span>
+          <span className="italic">
+            ... type <span style={{ color: 'var(--accent)' }}>/help</span> for all commands
+          </span>
         </div>
       </footer>
     </div>

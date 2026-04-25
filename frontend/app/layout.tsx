@@ -1,23 +1,21 @@
 import type { Metadata } from "next";
-import { Geist, Geist_Mono } from "next/font/google";
+import { JetBrains_Mono } from "next/font/google";
 import "./globals.css";
 import { ThemeProvider } from "./theme-provider";
 
-const geistSans = Geist({
-  variable: "--font-geist-sans",
+const jetbrainsMono = JetBrains_Mono({
+  variable: "--font-mono",
   subsets: ["latin"],
-});
-
-const geistMono = Geist_Mono({
-  variable: "--font-geist-mono",
-  subsets: ["latin"],
+  display: "swap",
+  weight: ["300", "400", "500", "600", "700", "800"],
 });
 
 export const metadata: Metadata = {
-  title: "Tinkr - Web Tools Collection",
-  description: "Privacy-first web tools. No pricing, no data collection. 71+ free tools for developers, designers, and makers.",
+  title: "tinkr — terminal tools",
+  description:
+    "Fast, minimal developer tools. 100% private, client-side only. No accounts, no tracking.",
   icons: {
-    icon: "data:image/svg+xml,<svg xmlns='http://www.w3.org/2000/svg' viewBox='0 0 100 100'><rect fill='%23ffffff' width='100' height='100'/><text x='50' y='70' font-size='80' fill='%23c96442' text-anchor='middle' font-weight='bold'>⚡</text></svg>",
+    icon: "data:image/svg+xml,<svg xmlns='http://www.w3.org/2000/svg' viewBox='0 0 100 100'><rect fill='%230c0c0c' width='100' height='100'/><text x='50' y='70' font-size='80' fill='%234ade80' text-anchor='middle' font-weight='bold'>$</text></svg>",
   },
 };
 
@@ -29,7 +27,7 @@ export default function RootLayout({
   return (
     <html
       lang="en"
-      className={`${geistSans.variable} ${geistMono.variable} antialiased`}
+      className={`${jetbrainsMono.variable} antialiased`}
       suppressHydrationWarning
     >
       <head>
@@ -51,10 +49,8 @@ export default function RootLayout({
           }}
         />
       </head>
-      <body className="bg-background text-foreground transition-colors duration-300">
-        <ThemeProvider>
-          {children}
-        </ThemeProvider>
+      <body className="bg-background text-foreground">
+        <ThemeProvider>{children}</ThemeProvider>
       </body>
     </html>
   );

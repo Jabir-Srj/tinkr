@@ -15,9 +15,9 @@ interface ToolTemplateProps {
 
 export function ToolCard({ children, title }: { children: React.ReactNode; title?: string }) {
   return (
-    <div className="rounded-lg border border-border bg-secondary-bg p-6 shadow-sm hover:shadow-md transition-shadow">
+    <div className="border border-border bg-secondary-bg p-4">
       {title && (
-        <h3 className="text-base font-semibold text-foreground mb-4">{title}</h3>
+        <h3 className="text-sm font-bold text-accent mb-3 uppercase tracking-wider"># {title}</h3>
       )}
       {children}
     </div>
@@ -88,12 +88,11 @@ function ThemeToggle() {
   return (
     <button
       onClick={toggleTheme}
-      className="p-2 rounded-lg border border-border bg-secondary-bg hover:bg-border text-foreground transition-colors flex items-center gap-2"
+      className="px-2.5 py-1 text-xs text-muted-foreground hover:text-accent transition-colors"
       title={isDark ? 'Switch to light mode' : 'Switch to dark mode'}
       aria-label="Toggle theme"
     >
-      {isDark ? <Sun size={18} /> : <Moon size={18} />}
-      <span className="text-sm font-medium hidden sm:inline">{isDark ? 'Light' : 'Dark'}</span>
+      [{isDark ? 'light' : 'dark'}]
     </button>
   );
 }
@@ -171,54 +170,55 @@ export default function ToolTemplate({
       {/* Main Content */}
       <div className="flex-1 flex flex-col w-full">
         {/* Header - Always visible on mobile, hide-on-scroll on desktop */}
-        <header className={`fixed top-0 right-0 left-0 lg:left-56 z-40 border-b border-border bg-background/95 backdrop-blur-sm transition-all duration-300 ease-out ${
-          isHeaderVisible ? 'translate-y-0 lg:translate-y-0' : '-translate-y-full lg:translate-y-0'
+        <header className={`fixed top-0 right-0 left-0 lg:left-56 z-40 border-b border-border bg-background transition-all duration-200 ${
+          isHeaderVisible ? 'translate-y-0' : '-translate-y-full lg:translate-y-0'
         }`}>
-          <div className="max-w-7xl mx-auto px-6 py-4 flex items-center justify-between">
-            <div className="flex items-center gap-3 flex-1">
-              <span className="text-3xl">{icon}</span>
-              <div>
-                <h1 className="text-2xl font-bold text-foreground">{title}</h1>
-                <p className="text-sm text-muted-foreground">{description}</p>
-              </div>
+          <div className="px-4 py-2 flex items-center justify-between gap-4" style={{ backgroundColor: 'var(--secondary-bg)' }}>
+            {/* Breadcrumb */}
+            <div className="flex items-center gap-1.5 text-xs min-w-0 flex-1">
+              <span style={{ color: 'var(--accent)' }}>❯</span>
+              <Link href="/" className="hover:no-underline transition-colors" style={{ color: 'var(--muted-foreground)' }}
+                onMouseEnter={e => (e.currentTarget.style.color = 'var(--accent)')}
+                onMouseLeave={e => (e.currentTarget.style.color = 'var(--muted-foreground)')}
+              >jabir@tinkr</Link>
+              <span style={{ color: 'var(--muted)' }}>›</span>
+              <span className="shrink-0">{icon}</span>
+              <span className="font-semibold truncate" style={{ color: 'var(--foreground)' }}>{title}</span>
+              <span className="hidden sm:block truncate ml-1 italic" style={{ color: 'var(--muted-foreground)' }}>— {description}</span>
             </div>
 
-            <div className="flex items-center gap-2">
+            {/* Actions */}
+            <div className="flex items-center gap-0 shrink-0 border border-border">
               <ThemeToggle />
-              
               <Link
                 href="/"
-                className="p-2 rounded-lg border border-border bg-secondary-bg hover:bg-border text-foreground transition-colors flex items-center gap-2"
+                className="px-2.5 py-1 text-xs text-muted-foreground hover:text-accent border-l border-border transition-colors hover:no-underline"
                 title="Back to home"
               >
-                <Home size={18} />
-                <span className="text-sm font-medium hidden sm:inline">Home</span>
+                [home]
               </Link>
-              
               {onReset && (
                 <button
                   onClick={onReset}
-                  className="p-2 rounded-lg border border-border bg-secondary-bg hover:bg-border text-foreground transition-colors flex items-center gap-2"
-                  title="Reset to defaults"
+                  className="px-2.5 py-1 text-xs text-muted-foreground hover:text-accent border-l border-border transition-colors"
+                  title="Reset"
                 >
-                  <RotateCcw size={18} />
-                  <span className="text-sm font-medium hidden sm:inline">Reset</span>
+                  [reset]
                 </button>
               )}
             </div>
           </div>
         </header>
 
-        {/* Content - Add top padding for fixed header */}
-        <main className="max-w-7xl mx-auto px-6 py-12 w-full pt-32 sm:pt-28 lg:pt-24">
+        {/* Content */}
+        <main className="max-w-7xl mx-auto px-6 py-8 w-full pt-20 lg:pt-12">
           {children}
         </main>
 
         {/* Footer */}
-        <footer className="border-t border-border bg-secondary-bg py-8 mt-12">
-          <div className="max-w-7xl mx-auto px-6 text-center text-sm text-muted-foreground">
-            <p>Made with ❤️ by <a href="https://github.com/Jabir-Srj/tinkr" className="text-accent hover:underline">Jabir</a></p>
-            <p className="mt-1">Part of <a href="/" className="text-accent hover:underline">Tinkr</a> • Privacy-first tools</p>
+        <footer className="border-t border-border bg-background py-3 mt-8">
+          <div className="px-4 text-xs text-muted-foreground">
+            <span className="text-accent">$</span> tinkr — part of <a href="/" className="text-accent hover:underline">tinkr.dev</a> · made by <a href="https://github.com/Jabir-Srj/tinkr" className="text-accent hover:underline">jabir</a>
           </div>
         </footer>
       </div>
