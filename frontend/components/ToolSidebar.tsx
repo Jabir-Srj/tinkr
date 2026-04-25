@@ -176,18 +176,19 @@ export function ToolSidebar() {
                             data-active={isActive}
                             className={`flex items-center gap-2 px-3 py-1.5 rounded-lg text-sm transition-all duration-200 group w-full min-w-0 ${
                               isActive
-                                ? 'bg-accent text-white font-bold shadow-lg shadow-accent/50 ring-2 ring-accent/80'
+                                ? 'font-bold shadow-lg'
                                 : 'text-foreground hover:bg-border/50 hover:text-accent'
                             }`}
+                            style={isActive ? { backgroundColor: 'var(--accent)', color: 'white', boxShadow: '0 4px 12px color-mix(in srgb, var(--accent) 40%, transparent)', outline: '2px solid color-mix(in srgb, var(--accent) 80%, transparent)', outlineOffset: '-2px' } : {}}
                             onClick={() => setIsOpen(false)}
                             title={tool.description}
                           >
                             <span className="text-base flex-shrink-0 group-hover:scale-110 transition-transform">
                               {tool.emoji}
                             </span>
-                            <span className="truncate font-medium flex-1 min-w-0 text-xs">{tool.name}</span>
+                            <span className="truncate font-medium flex-1 min-w-0 text-xs" style={isActive ? { color: 'white' } : {}}>{tool.name}</span>
                             {isActive && (
-                              <span className="ml-auto flex-shrink-0 text-white text-xs font-bold">●</span>
+                              <span className="ml-auto flex-shrink-0 text-xs font-bold" style={{ color: 'white' }}>●</span>
                             )}
                           </Link>
                         );
@@ -285,18 +286,19 @@ export function ToolSidebar() {
                               href={tool.url}
                               className={`flex items-center gap-2 px-3 py-1.5 rounded-lg text-sm transition-all duration-200 group w-full min-w-0 ${
                                 isActive
-                                  ? 'bg-accent text-white font-bold shadow-lg shadow-accent/50 ring-2 ring-accent/80'
+                                  ? 'font-bold shadow-lg'
                                   : 'text-foreground hover:bg-border/50 hover:text-accent'
                               }`}
+                              style={isActive ? { backgroundColor: 'var(--accent)', color: 'white', boxShadow: '0 4px 12px color-mix(in srgb, var(--accent) 40%, transparent)', outline: '2px solid color-mix(in srgb, var(--accent) 80%, transparent)', outlineOffset: '-2px' } : {}}
                               onClick={() => setIsOpen(false)}
                               title={tool.description}
                             >
                               <span className="text-base flex-shrink-0 group-hover:scale-110 transition-transform">
                                 {tool.emoji}
                               </span>
-                              <span className="truncate font-medium flex-1 min-w-0 text-xs">{tool.name}</span>
+                              <span className="truncate font-medium flex-1 min-w-0 text-xs" style={isActive ? { color: 'white' } : {}}>{tool.name}</span>
                               {isActive && (
-                                <span className="ml-auto flex-shrink-0 text-white text-xs font-bold">●</span>
+                                <span className="ml-auto flex-shrink-0 text-xs font-bold" style={{ color: 'white' }}>●</span>
                               )}
                             </Link>
                           );

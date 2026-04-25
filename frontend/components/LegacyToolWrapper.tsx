@@ -47,52 +47,6 @@ export function LegacyToolWrapper({ children }: LegacyToolWrapperProps) {
           </div>
         </footer>
       </div>
-
-      <style>{`
-        /* Override hardcoded colors from legacy pages */
-        .min-h-screen.bg-white { @apply bg-background !important; }
-        .bg-white { @apply bg-background dark:bg-slate-900 !important; }
-        .text-gray-900 { @apply text-foreground !important; }
-        .text-gray-600 { @apply text-muted-foreground !important; }
-        .text-gray-700 { @apply text-foreground !important; }
-        .bg-gray-50 { @apply bg-secondary-bg !important; }
-        .bg-gray-100 { @apply bg-secondary-bg dark:bg-slate-900 !important; }
-        .bg-gray-200 { @apply bg-border !important; }
-        .bg-gray-300 { @apply bg-border !important; }
-        .border-gray-300 { @apply border-border !important; }
-        .border-gray-400 { @apply border-border !important; }
-        .focus\:ring-\[\#c96442\]:focus { @apply focus:ring-accent !important; }
-        .focus\:border-transparent:focus { @apply focus:border-border !important; }
-        .hover\:bg-\[\#b85535\]:hover { @apply hover:opacity-90 !important; }
-        .hover\:bg-gray-300:hover { @apply hover:bg-border !important; }
-        .text-gray-200 { @apply text-muted-foreground !important; }
-        .text-blue-700 { @apply text-accent !important; }
-        .bg-blue-100 { @apply bg-accent/10 !important; }
-        .bg-blue-200 { @apply bg-accent/20 !important; }
-        .hover\:bg-blue-200:hover { @apply hover:bg-accent/20 !important; }
-        .text-green-700 { @apply text-accent !important; }
-        .bg-green-100 { @apply bg-accent/10 !important; }
-        .bg-green-200 { @apply bg-accent/20 !important; }
-        .hover\:bg-green-200:hover { @apply hover:bg-accent/20 !important; }
-        .text-red-600 { @apply text-red-500 !important; }
-        .\[\#c96442\] { @apply accent !important; }
-        
-        /* Dark mode fixes for tool pages */
-        .dark input,
-        .dark textarea,
-        .dark select {
-          @apply bg-slate-800 text-slate-100 border-slate-600 !important;
-        }
-        .dark input::placeholder,
-        .dark textarea::placeholder {
-          @apply text-slate-400 !important;
-        }
-        .dark input:focus,
-        .dark textarea:focus,
-        .dark select:focus {
-          @apply border-accent !important;
-        }
-      `}</style>
     </div>
   );
 }

@@ -223,56 +223,7 @@ export default function ToolTemplate({
         </footer>
       </div>
 
-      <style>{`
-        /* Dark mode fixes for ToolTemplate */
-        .dark input[type="text"],
-        .dark input[type="number"],
-        .dark input[type="email"],
-        .dark input[type="password"],
-        .dark input[type="search"],
-        .dark input[type="url"],
-        .dark textarea,
-        .dark select {
-          background-color: #2a211d !important;
-          color: #f5f1ed !important;
-          border-color: #3d302a !important;
-        }
 
-        .dark input::placeholder,
-        .dark textarea::placeholder {
-          color: #c4a896 !important;
-        }
-
-        .dark input:focus,
-        .dark textarea:focus,
-        .dark select:focus {
-          border-color: #d99166 !important;
-          box-shadow: 0 0 0 2px rgba(217, 145, 102, 0.12) !important;
-        }
-
-        /* Override inline dark: classes */
-        .dark .dark\\:bg-slate-800 {
-          background-color: #2a211d !important;
-        }
-
-        .dark .dark\\:text-gray-100,
-        .dark .dark\\:text-slate-100 {
-          color: #f5f1ed !important;
-        }
-
-        .dark .dark\\:border-slate-600 {
-          border-color: #3d302a !important;
-        }
-
-        .dark .dark\\:bg-slate-900 {
-          background-color: #1a1410 !important;
-        }
-
-        .dark .dark\\:text-gray-400,
-        .dark .dark\\:text-slate-400 {
-          color: #c4a896 !important;
-        }
-      `}</style>
     </div>
   );
 }

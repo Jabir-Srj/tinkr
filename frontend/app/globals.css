@@ -61,117 +61,119 @@ html.dark {
   --muted-foreground: #c4a896;
 }
 
-* {
-  @apply transition-colors duration-300 ease-in-out;
-}
+@layer base {
+  * {
+    @apply transition-colors duration-300 ease-in-out;
+  }
 
-html, body {
-  background-color: var(--background);
-  color: var(--foreground);
-  font-family: -apple-system, BlinkMacSystemFont, 'Segoe UI', 'Roboto', sans-serif;
-  margin: 0;
-  padding: 0;
-  line-height: 1.6;
-}
+  html, body {
+    background-color: var(--background);
+    color: var(--foreground);
+    font-family: -apple-system, BlinkMacSystemFont, 'Segoe UI', 'Roboto', sans-serif;
+    margin: 0;
+    padding: 0;
+    line-height: 1.6;
+  }
 
-body {
-  min-height: 100vh;
-}
+  body {
+    min-height: 100vh;
+  }
 
-/* Text elements */
-p {
-  color: var(--foreground);
-}
+  /* Text elements */
+  p {
+    color: var(--foreground);
+  }
 
-a {
-  color: var(--accent);
-  text-decoration: none;
-}
+  a {
+    color: var(--accent);
+    text-decoration: none;
+  }
 
-a:hover {
-  opacity: 0.8;
-}
+  a:hover {
+    opacity: 0.8;
+  }
 
-/* Form elements */
-input[type="text"],
-input[type="number"],
-input[type="email"],
-input[type="password"],
-input[type="search"],
-input[type="url"],
-textarea,
-select {
-  background-color: var(--secondary-bg);
-  color: var(--foreground);
-  border: 1px solid var(--border);
-  border-radius: 0.5rem;
-  padding: 0.5rem 0.75rem;
-  font-family: inherit;
-  font-size: 1rem;
-  transition: all 0.2s;
-}
+  /* Form elements — themed via CSS variables so all modes are handled */
+  input[type="text"],
+  input[type="number"],
+  input[type="email"],
+  input[type="password"],
+  input[type="search"],
+  input[type="url"],
+  textarea,
+  select {
+    background-color: var(--secondary-bg);
+    color: var(--foreground);
+    border: 1px solid var(--border);
+    border-radius: 0.5rem;
+    padding: 0.5rem 0.75rem;
+    font-family: inherit;
+    font-size: 1rem;
+    transition: all 0.2s;
+  }
 
-input[type="text"]:focus,
-input[type="number"]:focus,
-input[type="email"]:focus,
-input[type="password"]:focus,
-input[type="search"]:focus,
-input[type="url"]:focus,
-textarea:focus,
-select:focus {
-  outline: none;
-  border-color: var(--accent);
-  box-shadow: 0 0 0 2px var(--accent)20;
-}
+  input[type="text"]:focus,
+  input[type="number"]:focus,
+  input[type="email"]:focus,
+  input[type="password"]:focus,
+  input[type="search"]:focus,
+  input[type="url"]:focus,
+  textarea:focus,
+  select:focus {
+    outline: none;
+    border-color: var(--accent);
+    box-shadow: 0 0 0 2px color-mix(in srgb, var(--accent) 20%, transparent);
+  }
 
-input[type="text"]::placeholder,
-input[type="number"]::placeholder,
-input[type="email"]::placeholder,
-input[type="password"]::placeholder,
-input[type="search"]::placeholder,
-input[type="url"]::placeholder,
-textarea::placeholder {
-  color: var(--muted-foreground);
-  opacity: 0.6;
-}
+  input[type="text"]::placeholder,
+  input[type="number"]::placeholder,
+  input[type="email"]::placeholder,
+  input[type="password"]::placeholder,
+  input[type="search"]::placeholder,
+  input[type="url"]::placeholder,
+  textarea::placeholder {
+    color: var(--muted-foreground);
+    opacity: 0.6;
+  }
 
-/* Buttons */
-button {
-  background-color: transparent;
-  color: inherit;
-  border: 0;
-  cursor: pointer;
-  transition: color 0.2s, background-color 0.2s, opacity 0.2s, transform 0.2s;
-}
+  /* Buttons — kept in @layer base so utility classes can override */
+  button {
+    background-color: transparent;
+    color: inherit;
+    border: 0;
+    cursor: pointer;
+    transition: color 0.2s, background-color 0.2s, opacity 0.2s, transform 0.2s;
+  }
 
-button:not([class]) {
-  background-color: var(--accent);
-  color: white;
-  border: none;
-  padding: 0.5rem 1rem;
-  border-radius: 0.5rem;
-  font-family: inherit;
-  font-size: 1rem;
-}
+  button:not([class]) {
+    background-color: var(--accent);
+    color: white;
+    border: none;
+    padding: 0.5rem 1rem;
+    border-radius: 0.5rem;
+    font-family: inherit;
+    font-size: 1rem;
+  }
 
-button:not([class]):hover {
-  opacity: 0.9;
-  transform: translateY(-1px);
-}
+  button:not([class]):hover {
+    opacity: 0.9;
+    transform: translateY(-1px);
+  }
 
-button:not([class]):active {
-  transform: translateY(0);
-}
+  button:not([class]):active {
+    transform: translateY(0);
+  }
 
-button:disabled {
-  opacity: 0.5;
-  cursor: not-allowed;
-}
+  button:disabled {
+    opacity: 0.5;
+    cursor: not-allowed;
+  }
 
-/* Range inputs */
-input[type="range"] {
-  width: 100%;
-  cursor: pointer;
+  /* Range inputs */
+  input[type="range"] {
+    width: 100%;
+    cursor: pointer;
+  }
 }
 
 /* Scrollbar styling */
@@ -213,28 +215,45 @@ pre {
   overflow-x: auto;
 }
 
-/* Dark mode fixes for tool pages with hardcoded colors */
-.dark input[type="text"],
-.dark input[type="number"],
-.dark input[type="email"],
-.dark input[type="password"],
-.dark input[type="search"],
-.dark input[type="url"],
-.dark textarea,
-.dark select {
-  background-color: #2a211d !important;
-  color: #f5f1ed !important;
-  border-color: #3d302a !important;
-}
+/* ============================================================
+   Theme-aware overrides for hardcoded Tailwind color classes
+   used across tool pages. CSS variables change per mode so
+   these single rules handle both light and dark correctly.
+   ============================================================ */
 
-.dark input::placeholder,
-.dark textarea::placeholder {
-  color: #c4a896 !important;
+/* Backgrounds */
+.bg-white:not([style*="background"]) {
+  background-color: var(--secondary-bg) !important;
 }
+.bg-gray-50 { background-color: var(--secondary-bg) !important; }
+.bg-gray-100 { background-color: var(--secondary-bg) !important; }
+.bg-gray-200 { background-color: var(--border) !important; }
+.bg-gray-300 { background-color: var(--border) !important; }
 
-.dark input:focus,
-.dark textarea:focus,
-.dark select:focus {
-  border-color: #d99166 !important;
-  box-shadow: 0 0 0 2px rgba(217, 145, 102, 0.12) !important;
-}
+/* Text */
+.text-gray-900 { color: var(--foreground) !important; }
+.text-gray-800 { color: var(--foreground) !important; }
+.text-gray-700 { color: var(--foreground) !important; }
+.text-gray-600 { color: var(--muted-foreground) !important; }
+.text-gray-500 { color: var(--muted-foreground) !important; }
+.text-gray-400 { color: var(--muted) !important; }
+
+/* Borders */
+.border-gray-200 { border-color: var(--border) !important; }
+.border-gray-300 { border-color: var(--border) !important; }
+.border-gray-400 { border-color: var(--border) !important; }
+
+/* Dark mode slate overrides — map slate palette to warm theme palette */
+.dark .dark\:bg-slate-800,
+.dark .dark\:bg-slate-700 { background-color: var(--secondary-bg) !important; }
+.dark .dark\:bg-slate-900 { background-color: var(--background) !important; }
+.dark .dark\:text-gray-100,
+.dark .dark\:text-slate-100 { color: var(--foreground) !important; }
+.dark .dark\:text-gray-400,
+.dark .dark\:text-slate-400 { color: var(--muted-foreground) !important; }
+.dark .dark\:border-slate-600,
+.dark .dark\:border-slate-700 { border-color: var(--border) !important; }
+
+/* Focus rings — replace blue with accent */
+.focus\:ring-blue-500:focus { --tw-ring-color: var(--accent) !important; }
+.focus\:ring-blue-300:focus { --tw-ring-color: color-mix(in srgb, var(--accent) 50%, transparent) !important; }
