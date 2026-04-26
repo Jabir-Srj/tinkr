@@ -2,8 +2,6 @@
 
 import React, { useState, useEffect } from 'react';
 import Link from 'next/link';
-import { RotateCcw, Home, Sun, Moon } from 'lucide-react';
-import { ToolSidebar } from './ToolSidebar';
 
 interface ToolTemplateProps {
   title: string;
@@ -152,78 +150,63 @@ export default function ToolTemplate({
   }, [lastScrollY, isMobile, mounted]);
 
   if (!mounted) {
-    return (
-      <div className="min-h-screen bg-background text-foreground transition-colors duration-300 flex lg:pl-56">
-        <ToolSidebar />
-        <div className="flex-1 flex flex-col w-full">
-          <div className="pt-32 sm:pt-28 lg:pt-24" />
-        </div>
-      </div>
-    );
+    return <div className="pt-32 sm:pt-28 lg:pt-24" />;
   }
 
   return (
-    <div className="min-h-screen bg-background text-foreground transition-colors duration-300 flex lg:pl-56" suppressHydrationWarning>
-      {/* Sidebar */}
-      <ToolSidebar />
+    <div className="flex flex-col flex-1 w-full min-w-0" suppressHydrationWarning>
+      {/* Header - Always visible on mobile, hide-on-scroll on desktop */}
+      <header className={`fixed top-0 right-0 left-0 lg:left-56 z-40 border-b border-border bg-background transition-all duration-200 ${
+        isHeaderVisible ? 'translate-y-0' : '-translate-y-full lg:translate-y-0'
+      }`}>
+        <div className="px-4 py-2 flex items-center justify-between gap-4" style={{ backgroundColor: 'var(--secondary-bg)' }}>
+          {/* Breadcrumb */}
+          <div className="flex items-center gap-1.5 text-xs min-w-0 flex-1">
+            <span style={{ color: 'var(--accent)' }}>❯</span>
+            <Link href="/" className="hover:no-underline transition-colors" style={{ color: 'var(--muted-foreground)' }}
+              onMouseEnter={e => (e.currentTarget.style.color = 'var(--accent)')}
+              onMouseLeave={e => (e.currentTarget.style.color = 'var(--muted-foreground)')}
+            >jabir@tinkr</Link>
+            <span style={{ color: 'var(--muted)' }}>›</span>
+            <span className="shrink-0">{icon}</span>
+            <span className="font-semibold truncate" style={{ color: 'var(--foreground)' }}>{title}</span>
+            <span className="hidden sm:block truncate ml-1 italic" style={{ color: 'var(--muted-foreground)' }}>— {description}</span>
+          </div>
 
-      {/* Main Content */}
-      <div className="flex-1 flex flex-col w-full">
-        {/* Header - Always visible on mobile, hide-on-scroll on desktop */}
-        <header className={`fixed top-0 right-0 left-0 lg:left-56 z-40 border-b border-border bg-background transition-all duration-200 ${
-          isHeaderVisible ? 'translate-y-0' : '-translate-y-full lg:translate-y-0'
-        }`}>
-          <div className="px-4 py-2 flex items-center justify-between gap-4" style={{ backgroundColor: 'var(--secondary-bg)' }}>
-            {/* Breadcrumb */}
-            <div className="flex items-center gap-1.5 text-xs min-w-0 flex-1">
-              <span style={{ color: 'var(--accent)' }}>❯</span>
-              <Link href="/" className="hover:no-underline transition-colors" style={{ color: 'var(--muted-foreground)' }}
-                onMouseEnter={e => (e.currentTarget.style.color = 'var(--accent)')}
-                onMouseLeave={e => (e.currentTarget.style.color = 'var(--muted-foreground)')}
-              >jabir@tinkr</Link>
-              <span style={{ color: 'var(--muted)' }}>›</span>
-              <span className="shrink-0">{icon}</span>
-              <span className="font-semibold truncate" style={{ color: 'var(--foreground)' }}>{title}</span>
-              <span className="hidden sm:block truncate ml-1 italic" style={{ color: 'var(--muted-foreground)' }}>— {description}</span>
-            </div>
-
-            {/* Actions */}
-            <div className="flex items-center gap-0 shrink-0 border border-border">
-              <ThemeToggle />
-              <Link
-                href="/"
-                className="px-2.5 py-1 text-xs text-muted-foreground hover:text-accent border-l border-border transition-colors hover:no-underline"
-                title="Back to home"
+          {/* Actions */}
+          <div className="flex items-center gap-0 shrink-0 border border-border">
+            <ThemeToggle />
+            <Link
+              href="/"
+              className="px-2.5 py-1 text-xs text-muted-foreground hover:text-accent border-l border-border transition-colors hover:no-underline"
+              title="Back to home"
+            >
+              [home]
+            </Link>
+            {onReset && (
+              <button
+                onClick={onReset}
+                className="px-2.5 py-1 text-xs text-muted-foreground hover:text-accent border-l border-border transition-colors"
+                title="Reset"
               >
-                [home]
-              </Link>
-              {onReset && (
-                <button
-                  onClick={onReset}
-                  className="px-2.5 py-1 text-xs text-muted-foreground hover:text-accent border-l border-border transition-colors"
-                  title="Reset"
-                >
-                  [reset]
-                </button>
-              )}
-            </div>
+                [reset]
+              </button>
+            )}
           </div>
-        </header>
+        </div>
+      </header>
 
-        {/* Content */}
-        <main className="max-w-7xl mx-auto px-6 py-8 w-full pt-20 lg:pt-12">
-          {children}
-        </main>
+      {/* Content */}
+      <main className="max-w-7xl mx-auto px-6 py-8 w-full pt-20 lg:pt-12">
+        {children}
+      </main>
 
-        {/* Footer */}
-        <footer className="border-t border-border bg-background py-3 mt-8">
-          <div className="px-4 text-xs text-muted-foreground">
-            <span className="text-accent">$</span> tinkr — part of <a href="/" className="text-accent hover:underline">tinkr.dev</a> · made by <a href="https://github.com/Jabir-Srj/tinkr" className="text-accent hover:underline">jabir</a>
-          </div>
-        </footer>
-      </div>
-
-
+      {/* Footer */}
+      <footer className="border-t border-border bg-background py-3 mt-8">
+        <div className="px-4 text-xs text-muted-foreground">
+          <span className="text-accent">$</span> tinkr — part of <a href="/" className="text-accent hover:underline">tinkr.dev</a> · made by <a href="https://github.com/Jabir-Srj/tinkr" className="text-accent hover:underline">jabir</a>
+        </div>
+      </footer>
     </div>
   );
 }
